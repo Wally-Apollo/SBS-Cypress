@@ -17,7 +17,7 @@ function searchWithOneField(fieldId,value){
 
 context('MATRIX', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.21.134/retailplus/login/auth')
+        cy.visit('http://172.17.13.253:8080/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -46,9 +46,9 @@ context('MATRIX', () => {
 
         //Validate that there will be no Error message displayed
         cy.get('h3').contains('Planogram List');
-        cy.get('label').contains('Document Id');
+        cy.get('label').contains('Document ID');
         cy.get('label').contains('Reference Id');
-        cy.get('label').contains('Status:');
+        cy.get('label').contains('Status');
         cy.get('.sortable').contains('Document Id');
         cy.get('.sortable').contains('Reference Id');
         cy.get('.sortable').contains('Status');
@@ -62,36 +62,26 @@ context('MATRIX', () => {
         navigateToSubModule('Planogram'); 
 
         //Search Using Document Id
-        searchWithOneField('externalId','0000000');
-        cy.get('td').find('a').contains('0000000');
+        searchWithOneField('f_documentId','10_1L_20180103');
+        cy.get('td').find('a').contains('10_1L_20180103');
         cy.get('.btn').contains('Clear').click();
 
-        //Search Using Username
-        searchWithOneField('username','0000000');
-        cy.get('td').find('a').contains('0000000');
-        cy.get('.btn').contains('Clear').click();
+        // //Search Using Reference Id
+        // searchWithOneField('f_referenceId','10 - Grocery');
+        // cy.get('td').find('a').contains('10 - Grocery');
+        // cy.get('.btn').contains('Clear').click();
 
-        //Search Using Firstname
-        searchWithOneField('firstName','Dummy');
-        cy.get('td').find('a').contains('Dummy');
-        cy.get('.btn').contains('Clear').click();
-
-        //Search Using Last name
-        searchWithOneField('lastName','Cashier');
-        cy.get('td').find('a').contains('Cashier');
+        //Search Using Status
+        searchWithOneField('f_status','Published');
+        cy.get('td').find('a').contains('Published');
         cy.get('.btn').contains('Clear').click();
 
         //Search using all field
-        cy.get('[id^=externalId]').type('0000000');
-        cy.get('[id^=username]').type('0000000');
-        cy.get('[id^=firstName]').type('Dummy');
-        cy.get('[id^=lastName]').type('Cashier');
-        cy.get('.btn').contains('Search').click();
-
-        cy.get('td').find('a').contains('0000000');
-        cy.get('td').find('a').contains('0000000');
-        cy.get('td').find('a').contains('Dummy');
-        cy.get('td').find('a').contains('Cashier');
+        cy.get('[id^=f_documentId]').type('10_1L_20180103');
+        cy.get('[id^=f_status]').type('Published');
+        //Assert search result
+        cy.get('td').find('a').contains('10_1L_20180103');
+        cy.get('td').find('a').contains('Published');
 
       })
 })
