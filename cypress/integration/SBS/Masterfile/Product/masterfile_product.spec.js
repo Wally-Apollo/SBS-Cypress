@@ -99,7 +99,7 @@ context('Masterfile -> Product', () => {
 
       })
 
-      it('Validation of Show Product page', () =>{
+    it('Validation of Show Product page', () =>{
         
         //Click Master file from the menu
         navigateToModule('Masterfile');
@@ -108,10 +108,10 @@ context('Masterfile -> Product', () => {
         //Validate that there will be no Error message displayed
         validateProductModule();
 
-        //Select any user from the list
+        //Select any Product from the list
         cy.get('td').find('a').contains('00000002').click();
 
-        //Validate Show user
+        //Validate Show Product
         cy.get('h3').contains('Show Product');
         cy.get('li').find('a').contains('Price');
         cy.get('li').find('a').contains('Supplier');
@@ -122,66 +122,147 @@ context('Masterfile -> Product', () => {
         cy.get('li').find('a').contains('Planogram Location');
       })
 
-      // it('Search Facility User Role', () =>{
+    it('Search Product Price', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
 
-      //   //Click Master file from the menu
-      //   navigateToModule('Masterfile');
-      //   //Click User from menu list
-      //   navigateToSubModule('User'); 
-      //   //Validate that there will be no Error message displayed
-      //   validateUserModule();
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
 
-      //   //Select any user from the list
-      //   cy.get('td').find('a').contains('0000000').click();
+        //Search Using Product Id
+        searchWithOneField('externalId','EX000381');
+        cy.get('td').find('a').contains('EX000381').click();
 
-      //   //Validate Show user
-      //   cy.get('h3').contains('Show User');
-      //   cy.get('li').find('a').contains('Facility User Role').click();
-        
-      //   cy.get('[name="facilityUserRoleSearchCriteria"]').type('2003');
-      //   cy.get('*[class^="search btn"]').click();
-      //   cy.get('td').find('a').contains('2003');
-      // })
+        // cy.get('li').find('a').contains('Price').click();
+        cy.get('[name="productPriceSearchCriteria"]').type('PRC_CBD');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('PRC_CBD');
+      })
 
-      // it('Search Contact Info', () =>{
+    it('Search Product Supplier', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
 
-      //   //Click Master file from the menu
-      //   navigateToModule('Masterfile');
-      //   //Click User from menu list
-      //   navigateToSubModule('User'); 
-      //   //Validate that there will be no Error message displayed
-      //   validateUserModule();
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
 
-      //   //Select any user from the list
-      //   cy.get('td').find('a').contains('0000000').click();
+        //Search Using Product Id
+        searchWithOneField('externalId','EX000381');
+        cy.get('td').find('a').contains('EX000381').click();
 
-      //   //Validate Show user
-      //   cy.get('h3').contains('Show User');
-      //   cy.get('li').find('a').contains('Contact Info').click();
-        
-      //   cy.get('[name="contactMechSearchCriteria"]').type('sad');
-      //   cy.get('*[class^="search btn"]').click();
-      //   cy.get('td').find('a').contains('sad');
-      // })
+        cy.get('li').find('a').contains('Supplier').click();
+        cy.get('[name="supplierProductSearchCriteria"]').type('CDI');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('CDI');
+    })
 
-      // it('Search Party Info', () =>{
+    it('Search Product Attribute', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
 
-      //   //Click Master file from the menu
-      //   navigateToModule('Masterfile');
-      //   //Click User from menu list
-      //   navigateToSubModule('User'); 
-      //   //Validate that there will be no Error message displayed
-      //   validateUserModule();
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
 
-      //   //Select any user from the list
-      //   cy.get('td').find('a').contains('0000000').click();
+        //Search Using Product Id
+        searchWithOneField('externalId','10010030');
+        cy.get('td').find('a').contains('10010030').click();
 
-      //   //Validate Show user
-      //   cy.get('h3').contains('Show User');
-      //   cy.get('li').find('a').contains('Party Info').click();
-        
-      //   cy.get('[name="partyInfoSearchCriteria"]').type('Test-migel1');
-      //   cy.get('*[class^="search btn"]').click();
-      //   cy.get('td').find('a').contains('Test-migel1');
-      // })
+        cy.get('li').find('a').contains('Product Attribute').click();
+        cy.get('[name="productAttributeSearchCriteria"]').type('Datu Puti');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('Datu Puti');
+    })
+
+    it('Search Product Price Commission', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
+
+        //Search Using Product Id
+        searchWithOneField('externalId','11800040');
+        cy.get('td').find('a').contains('11800040').click();
+
+        cy.get('li').find('a').contains('Product Price Commission').click();
+        cy.get('[name="productPriceCommissionSearchCriteria"]').type('PRC_LUZON');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('PRC_LUZON');
+    })
+
+    it('Search Product Category', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
+
+        //Search Using Product Id
+        searchWithOneField('externalId','11800040');
+        cy.get('td').find('a').contains('11800040').click();
+
+        cy.get('li').find('a').contains('Product Category').click();
+        cy.get('[name="productCategoryMemberSearchCriteria"]').type('1180');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('1180');
+    })
+
+    it('Search Product Identification', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
+
+        //Search Using Product Id
+        searchWithOneField('externalId','11800040');
+        cy.get('td').find('a').contains('11800040').click();
+
+        cy.get('li').find('a').contains('Product Identification').click();
+        cy.get('[name="productIdentificationSearchCriteria"]').type('GTIN');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('GTIN');
+    })
+
+    it('Search Product Promo', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
+
+        //Search Using Product Id
+        searchWithOneField('externalId','10820362');
+        cy.get('td').find('a').contains('10820362').click();
+
+        cy.get('li').find('a').contains('Product Promo').click();
+        cy.get('[name="productPromoProductSearchCriteria"]').type('Dummy Promo');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains('Dummy Promo');
+    })
+
+    it('Search Planogram Location', () =>{
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('Product'); 
+        validateProductModule();
+
+        //Search Using Product Id
+        searchWithOneField('externalId','14010016');
+        cy.get('td').find('a').contains('14010016').click();
+
+        cy.get('li').find('a').contains('Planogram Location').click();
+        cy.get('[name="planogramLocationSearchCriteria"]').type('7558');
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').contains('7558');
+    })
 })

@@ -38,11 +38,10 @@ context('Masterfile -> User', () => {
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        // cy.get('[id^=password]').contains('Password');
-        const username = '0920013';
-        const password = '920013';
-        cy.get('[id^=username]').type(username);
-        cy.get('[id^=password]').type(password);
+        cy.fixture('login/login_data').then((login_data) =>{
+          cy.get('[id^=username]').type(login_data.user_name);
+          cy.get('[id^=password]').type(login_data.password);
+        })
         cy.get('[id^=submit]').click();
 
         cy.contains('Masterfile');
@@ -73,39 +72,40 @@ context('Masterfile -> User', () => {
         navigateToSubModule('User'); 
         validateUserModule();
 
-        //Search Using User Id
-        searchWithOneField('externalId','0000000');
-        cy.get('td').find('a').contains('0000000');
-        cy.get('.btn').contains('Clear').click();
-
-        //Search Using Username
-        searchWithOneField('username','0000000');
-        cy.get('td').find('a').contains('0000000');
-        cy.get('.btn').contains('Clear').click();
-
-        //Search Using Firstname
-        searchWithOneField('firstName','Dummy');
-        cy.get('td').find('a').contains('Dummy');
-        cy.get('.btn').contains('Clear').click();
-
-        //Search Using Last name
-        searchWithOneField('lastName','Cashier');
-        cy.get('td').find('a').contains('Cashier');
-        cy.get('.btn').contains('Clear').click();
-
-        //Search using all field
-        cy.get('[id^=externalId]').type('0000000');
-        cy.get('[id^=username]').type('0000000');
-        cy.get('[id^=firstName]').type('Dummy');
-        cy.get('[id^=lastName]').type('Cashier');
-        cy.get('.btn').contains('Search').click();
-
-        cy.get('td').find('a').contains('0000000');
-        cy.get('td').find('a').contains('0000000');
-        cy.get('td').find('a').contains('Dummy');
-        cy.get('td').find('a').contains('Cashier');
-
-
+        cy.fixture('masterfile/user/search_user_data').then((data) => {
+          
+          //Search Using User Id
+          searchWithOneField('externalId',data.external_id);
+          cy.get('td').find('a').contains(data.external_id);
+          cy.get('.btn').contains('Clear').click();
+  
+          //Search Using Username
+          searchWithOneField('username',data.user_name);
+          cy.get('td').find('a').contains(data.user_name);
+          cy.get('.btn').contains('Clear').click();
+  
+          //Search Using Firstname
+          searchWithOneField('firstName',data.first_name);
+          cy.get('td').find('a').contains(data.first_name);
+          cy.get('.btn').contains('Clear').click();
+  
+          //Search Using Last name
+          searchWithOneField('lastName',data.last_name);
+          cy.get('td').find('a').contains(data.last_name);
+          cy.get('.btn').contains('Clear').click();
+  
+          //Search using all field
+          cy.get('[id^=externalId]').type(data.external_id);
+          cy.get('[id^=username]').type(data.user_name);
+          cy.get('[id^=firstName]').type(data.first_name);
+          cy.get('[id^=lastName]').type(data.last_name);
+          cy.get('.btn').contains('Search').click();
+  
+          cy.get('td').find('a').contains(data.external_id);
+          cy.get('td').find('a').contains(data.user_name);
+          cy.get('td').find('a').contains(data.first_name);
+          cy.get('td').find('a').contains(data.last_name);
+        })
       })
 
       it('Validation of Show User page', () =>{
@@ -118,8 +118,9 @@ context('Masterfile -> User', () => {
         validateUserModule();
 
         //Select any user from the list
-        cy.get('td').find('a').contains('0000000').click();
-
+        cy.fixture('masterfile/user/show_user_page_data').then((data) => {
+          cy.get('td').find('a').contains(data.external_id).click();
+        })
         //Validate Show user
         cy.get('h3').contains('Show User');
         cy.get('li').find('a').contains('Facility User Role');
@@ -136,16 +137,18 @@ context('Masterfile -> User', () => {
         //Validate that there will be no Error message displayed
         validateUserModule();
 
-        //Select any user from the list
-        cy.get('td').find('a').contains('0000000').click();
+        cy.fixture('masterfile/user/search_facility_user_role_data').then((data) => {
+          //Select any user from the list
+          cy.get('td').find('a').contains(data.external_id).click();
 
-        //Validate Show user
-        cy.get('h3').contains('Show User');
-        cy.get('li').find('a').contains('Facility User Role').click();
-        
-        cy.get('[name="facilityUserRoleSearchCriteria"]').type('2003');
-        cy.get('*[class^="search btn"]').click();
-        cy.get('td').find('a').contains('2003');
+          //Validate Show user
+          cy.get('h3').contains('Show User');
+          cy.get('li').find('a').contains('Facility User Role').click();
+          
+          cy.get('[name="facilityUserRoleSearchCriteria"]').type(data.facility_user_role_criteria);
+          cy.get('*[class^="search btn"]').click();
+          cy.get('td').find('a').contains(data.facility_user_role_criteria);      
+        })
       })
 
       it('Search Contact Info', () =>{
@@ -157,16 +160,18 @@ context('Masterfile -> User', () => {
         //Validate that there will be no Error message displayed
         validateUserModule();
 
-        //Select any user from the list
-        cy.get('td').find('a').contains('0000000').click();
+        cy.fixture('masterfile/user/search_contact_info_data').then((data) => {
+          //Select any user from the list
+          cy.get('td').find('a').contains(data.external_id).click();
 
-        //Validate Show user
-        cy.get('h3').contains('Show User');
-        cy.get('li').find('a').contains('Contact Info').click();
-        
-        cy.get('[name="contactMechSearchCriteria"]').type('sad');
-        cy.get('*[class^="search btn"]').click();
-        cy.get('td').find('a').contains('sad');
+          //Validate Show user
+          cy.get('h3').contains('Show User');
+          cy.get('li').find('a').contains('Contact Info').click();
+          
+          cy.get('[name="contactMechSearchCriteria"]').type(data.contact_mech_search_criteria);
+          cy.get('*[class^="search btn"]').click();
+          cy.get('td').find('a').contains('sad');        
+        })
       })
 
       it('Search Party Info', () =>{
@@ -178,15 +183,17 @@ context('Masterfile -> User', () => {
         //Validate that there will be no Error message displayed
         validateUserModule();
 
-        //Select any user from the list
-        cy.get('td').find('a').contains('0000000').click();
+        cy.fixture('masterfile/user/search_party_info_data').then((data) => {
+          //Select any user from the list
+          cy.get('td').find('a').contains(data.external_id).click();
 
-        //Validate Show user
-        cy.get('h3').contains('Show User');
-        cy.get('li').find('a').contains('Party Info').click();
-        
-        cy.get('[name="partyInfoSearchCriteria"]').type('Test-migel1');
-        cy.get('*[class^="search btn"]').click();
-        cy.get('td').find('a').contains('Test-migel1');
+          //Validate Show user
+          cy.get('h3').contains('Show User');
+          cy.get('li').find('a').contains('Party Info').click();
+          
+          cy.get('[name="partyInfoSearchCriteria"]').type(data.party_info_search_criteria);
+          cy.get('*[class^="search btn"]').click();
+          cy.get('td').find('a').contains(data.party_info_search_criteria);
+        })
       })
 })
