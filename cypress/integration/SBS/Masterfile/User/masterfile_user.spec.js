@@ -38,7 +38,7 @@ context('Masterfile -> User', () => {
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        cy.fixture('login/login_data').then((login_data) =>{
+        cy.fixture('login/login_data').then((login_data) => {
           cy.get('[id^=username]').type(login_data.user_name);
           cy.get('[id^=password]').type(login_data.password);
         })

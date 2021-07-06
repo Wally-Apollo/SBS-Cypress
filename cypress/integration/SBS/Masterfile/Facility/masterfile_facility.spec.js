@@ -39,11 +39,10 @@ context('Masterfile -> Facility', () => {
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        // cy.get('[id^=password]').contains('Password');
-        const username = '0920013';
-        const password = '920013';
-        cy.get('[id^=username]').type(username);
-        cy.get('[id^=password]').type(password);
+        cy.fixture('login/login_data').then((login_data) =>{
+            cy.get('[id^=username]').type(login_data.user_name);
+            cy.get('[id^=password]').type(login_data.password);
+        })
         cy.get('[id^=submit]').click();
 
         cy.contains('Masterfile');
@@ -75,37 +74,37 @@ context('Masterfile -> Facility', () => {
 
         //Validate that there will be no Error message displayed
         validateFacilityModule();
-
-       //Search Using Facility Id
-       searchWithOneField('externalId','0166');
-       cy.get('td').find('a').contains('0166');
-       cy.get('.btn').contains('Clear').click();
-
-       //Search Using Facility Name
-       searchWithOneField('groupName','COLUMBIA');
-       cy.get('td').find('a').contains('COLUMBIA');
-       cy.get('.btn').contains('Clear').click();
-
-       //Search Using GLN
-       searchWithOneField('gln','4806018201660');
-       cy.get('td').find('a').contains('4806018201660');
-       cy.get('.btn').contains('Clear').click();
-
-       //Search Using Status
-       cy.get('[id^=facilityStatus]').select('Closed');
-       cy.get('.btn').contains('Search').click();
-       cy.get('tbody>tr').eq(0).find('a').eq(0).click(); 
-       cy.get('span').contains('Closed');
-       cy.get('.btn').contains('<< Back to Facility List').click();
-
-       //Search Using Facility Type
-       cy.get('[id^=autoFTParentList]').click().type('{downarrow}').type('{enter}');
-       cy.get('.btn').contains('Search').click();
-       for(let i = 0; i < 10; i ++){
-           cy.get('tbody>tr').eq(i).find('a').eq(3).contains('Corporate');
-       }
-
         
+        cy.fixture('masterfile/facility/search_facility_data').then((data) => {
+            //Search Using Facility Id
+            searchWithOneField('externalId',data.external_id);
+            cy.get('td').find('a').contains(data.external_id);
+            cy.get('.btn').contains('Clear').click();
+
+            //Search Using Facility Name
+            searchWithOneField('groupName',data.group_name);
+            cy.get('td').find('a').contains(data.group_name);
+            cy.get('.btn').contains('Clear').click();
+
+            //Search Using GLN
+            searchWithOneField('gln',data.gln);
+            cy.get('td').find('a').contains(data.gln);
+            cy.get('.btn').contains('Clear').click();
+
+            //Search Using Status
+            cy.get('[id^=facilityStatus]').select(data.facility_status);
+            cy.get('.btn').contains('Search').click();
+            cy.get('tbody>tr').eq(0).find('a').eq(0).click(); 
+            cy.get('span').contains(data.facility_status);
+            cy.get('.btn').contains('<< Back to Facility List').click();
+
+            //Search Using Facility Type
+            cy.get('[id^=autoFTParentList]').click().type('{downarrow}').type('{enter}');
+            cy.get('.btn').contains('Search').click();
+            for(let i = 0; i < 10; i ++){
+                cy.get('tbody>tr').eq(i).find('a').eq(3).contains('Corporate');
+            }
+        })
     })
 
     it('Validation of Show Facility page', () => {
@@ -118,9 +117,11 @@ context('Masterfile -> Facility', () => {
         //Validate that there will be no Error message displayed
         validateFacilityModule();
 
-        //Select any facility from the list
-        cy.get('td').find('a').contains('0002').click();
-        
+        cy.fixture('masterfile/facility/show_facility_data').then((data) => {
+            //Select any facility from the list
+            cy.get('td').find('a').contains(data.external_id).click();
+        })
+
         //Validate Show Facility
         cy.get('h3').contains('Show Facility');
         cy.get('li').find('a').contains('Contact Info');
@@ -135,16 +136,17 @@ context('Masterfile -> Facility', () => {
 
         //Validate that there will be no Error message displayed
         validateFacilityModule();
-
-       //Search Using Facility Id
-       searchWithOneField('externalId','0166');
-       cy.get('td').find('a').contains('0166').click();
-
-        //Validate Show Facility
-        cy.get('h3').contains('Show Facility');
-        cy.get('li').find('a').contains('Contact Info').click();
-        cy.get('[name="contactMechSearchCriteria"]').type('1232323');
-        cy.get('*[class^="search btn"]').click();
-        cy.get('td').find('a').contains('1232323');
+        
+        cy.fixture('masterfile/facility/search_facility_contact_info_data').then((data) => {
+            //Search Using Facility Id
+            searchWithOneField('externalId',data.external_id);
+            cy.get('td').find('a').contains(data.external_id).click();
+            //Validate Show Facility
+            cy.get('h3').contains('Show Facility');
+            cy.get('li').find('a').contains('Contact Info').click();
+            cy.get('[name="contactMechSearchCriteria"]').type(data.contact_mech_search_criteria);
+            cy.get('*[class^="search btn"]').click();
+            cy.get('td').find('a').contains(data.contact_mech_search_criteria);
+        })
     })
 })

@@ -40,11 +40,10 @@ context('Masterfile -> Promo', () => {
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        // cy.get('[id^=password]').contains('Password');
-        const username = '0920013';
-        const password = '920013';
-        cy.get('[id^=username]').type(username);
-        cy.get('[id^=password]').type(password);
+        cy.fixture('login/login_data').then((login_data) =>{
+          cy.get('[id^=username]').type(login_data.user_name);
+          cy.get('[id^=password]').type(login_data.password);
+        })
         cy.get('[id^=submit]').click();
 
         cy.contains('Masterfile');
@@ -77,13 +76,15 @@ context('Masterfile -> Promo', () => {
       //Validate that there will be no Error message displayed
       validatePromoModule();    
 
-      //Search Using Promo Id
-      searchWithOneField('id','00000000');
-      cy.get('.btn').contains('Clear').click();
+      cy.fixture('masterfile/promo/search_promo_data').then((data) => {
+        //Search Using Promo Id
+        searchWithOneField('id',data.id);
+        cy.get('.btn').contains('Clear').click();
 
-      //Search Using Promo Name
-      searchWithOneField('promoName','Dummy Promo');
-      cy.get('.btn').contains('Clear').click();
+        //Search Using Promo Name
+        searchWithOneField('promoName',data.promo_name);
+        cy.get('.btn').contains('Clear').click();
+      })
     })
 
     it('Validation of Show Promo page', () => {
@@ -96,12 +97,14 @@ context('Masterfile -> Promo', () => {
       //Validate that there will be no Error message displayed
       validatePromoModule();
 
-      //Select any facility from the list
-      cy.get('td').find('a').contains('00000000').click();
-        
-      //Validate Show Facility
-      cy.get('h3').contains('Show Promo');
-      cy.get('li').find('a').contains('Promo Facility');
+      cy.fixture('masterfile/promo/search_promo_data').then((data) => {
+        //Select any facility from the list
+        cy.get('td').find('a').contains(data.id).click();
+          
+        //Validate Show Facility
+        cy.get('h3').contains('Show Promo');
+        cy.get('li').find('a').contains('Promo Facility');      
+      })
     })
 
     it('Search Promo Facility',() => {
@@ -114,15 +117,18 @@ context('Masterfile -> Promo', () => {
       //Validate that there will be no Error message displayed
       validatePromoModule();
 
-      //Select any facility from the list
-      cy.get('td').find('a').contains('00000000').click();
+      cy.fixture('masterfile/promo/search_promo_facility_data').then((data) => {
+        //Select any facility from the list
+        cy.get('td').find('a').contains(data.id).click();
 
-      //Validate Show Facility
-      cy.get('h3').contains('Show Promo');
-      cy.get('li').find('a').contains('Promo Facility').click();
-      cy.get('[name="promoFacilitySearchCriteria"]').type('Orion');
-      cy.get('*[class^="search btn"]').click();
-      cy.get('td').find('a').contains('Orion');
+        //Validate Show Facility
+        cy.get('h3').contains('Show Promo');
+        cy.get('li').find('a').contains('Promo Facility').click();
+        cy.get('[name="promoFacilitySearchCriteria"]')
+          .type(data.promo_facility_criteria);
+        cy.get('*[class^="search btn"]').click();
+        cy.get('td').find('a').contains(data.promo_facility_criteria);        
+      })
     })
 
 })
