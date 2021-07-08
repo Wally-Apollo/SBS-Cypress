@@ -79,6 +79,7 @@ context('Masterfile -> Promo', () => {
       cy.fixture('masterfile/promo/search_promo_data').then((data) => {
         //Search Using Promo Id
         searchWithOneField('id',data.id);
+        cy.get('td').find('a').contains(data.id);
         cy.get('.btn').contains('Clear').click();
 
         //Search Using Promo Name
