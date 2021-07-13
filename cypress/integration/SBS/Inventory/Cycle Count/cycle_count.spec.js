@@ -228,5 +228,53 @@ context('CYCLE COUNT', () => {
 
 
       })
+
+      it('Create Cycle Count',() =>{
+        
+        //Click Inventory file from the menu
+        navigateToModule('Inventory');
+        //Click Cycle Count from the submenu
+        navigateToSubModule('Cycle Count')
+
+        validateModule();
+
+        cy.get('.btn').contains('New Cycle Count').click();
+
+        cy.get('h3').contains('Create Cycle Count');
+
+        cy.get('[name="countDate"]').click();
+
+        cy.fixture('inventory/cycle_count/create_cycle_count_data').then((data) => {
+          cy.get('td').find('a').contains(data.date).click();
+
+          cy.get('.btn').contains('Save').click();
+
+          cy.get('span').contains('Cycle Count created');
+        })
+      })
+
+      it('Create Cycle Count Variance',() =>{
+        
+        //Click Inventory file from the menu
+        navigateToModule('Inventory');
+        //Click Cycle Count from the submenu
+        navigateToSubModule('Cycle Count')
+
+        validateModule();
+
+        cy.get('.btn').contains('New Cycle Count Variance').click();
+
+        cy.get('h3').contains('Create Cycle Count Variance');
+
+        cy.get('[name="countDate"]').click();
+
+        cy.fixture('inventory/cycle_count/create_cycle_count_data').then((data) => {
+          cy.get('td').find('a').contains(data.date).click();
+
+          cy.get('.btn').contains('Save').click();
+
+          cy.get('span').contains('Cycle Count created');
+        })
+      })
       
 })
