@@ -60,13 +60,13 @@ function validateModule(){
 
 context('CYCLE COUNT', () => {
     beforeEach(() => {
-        cy.fixture('login/login_data').then((sbs_credentials) => {
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
         cy.visit(sbs_credentials.url)
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        cy.fixture('login/login_data').then((sbs_credentials) => {
-          cy.get('[id^=username]').type(sbs_credentials.user_name)
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+          cy.get('[id^=username]').type(sbs_credentials.username)
           cy.get('[id^=password]').type(sbs_credentials.password)
           cy.get('[id^=submit]').click()
 

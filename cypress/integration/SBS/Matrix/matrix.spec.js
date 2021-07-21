@@ -23,18 +23,18 @@ context('MATRIX', () => {
         cy.contains('Login');
 
         //Call Login data file
-        cy.fixture('login/login_data').then((login_data) => {
-        cy.get('[id^=username]').type(login_data.username)
-        cy.get('[id^=password]').type(login_data.password)
-        cy.get('[id^=submit]').click()
-        //Validate Home page
-        cy.contains('Masterfile');
-        cy.contains('Matrix');
-        cy.contains('Inventory');
-        cy.contains('Sales');
-        cy.contains('Report');
-        cy.contains('Misc');
-        cy.contains('Sign out');
+        cy.fixture('sbs_credentials/sbs_credentials.json').then((login_data) =>{
+            cy.get('[id^=username]').type(login_data.username);
+            cy.get('[id^=password]').type(login_data.password)
+            cy.get('[id^=submit]').click()
+            //Validate Home page
+            cy.contains('Masterfile');
+            cy.contains('Matrix');
+            cy.contains('Inventory');
+            cy.contains('Sales');
+            cy.contains('Report');
+            cy.contains('Misc');
+            cy.contains('Sign out');
     })
 
     })

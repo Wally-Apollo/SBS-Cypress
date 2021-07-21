@@ -38,8 +38,8 @@ context('Sales -> Funds', () => {
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
-        cy.fixture('login/login_data').then((login_data) =>{
-            cy.get('[id^=username]').type(login_data.user_name);
+        cy.fixture('sbs_credentials/sbs_credentials.json').then((login_data) =>{
+            cy.get('[id^=username]').type(login_data.username);
             cy.get('[id^=password]').type(login_data.password);
         })
         cy.get('[id^=submit]').click();

@@ -28,9 +28,9 @@ context('INVENTORY', () => {
         // cy.get('[id^=password]').contains('Password');
         const username = '0920013';
         const password = '920013';
-        cy.fixture('login/login_data').then((login_data) => {
-          cy.get('[id^=username]').type(login_data.username)
-          cy.get('[id^=password]').type(login_data.password)
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+          cy.get('[id^=username]').type(sbs_credentials.username)
+          cy.get('[id^=password]').type(sbs_credentials.password)
           cy.get('[id^=submit]').click()
 
           cy.contains('Masterfile');
