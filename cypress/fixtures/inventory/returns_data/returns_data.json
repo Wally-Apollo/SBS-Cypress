@@ -1,0 +1,15 @@
+{
+  "supplier" : "Convenience Distribution Inc. Pasig [CDI]",
+  "returns_year" : "2021",
+  "returns_month" : "Jun",
+  "returns_day" : "1",
+  "facility" : "COLUMBIA",
+  "new_status" : "Created",
+  "complete_status" : "",
+  "document_id" : "BXCZ0T50",
+  "returns_product_name" : "Penshoppe Style Serum Pink 30ml",
+  "returns_product_id" : "80000422",
+  "product" : "Penshoppe Style Serum Pink 30ml",
+  "qty" : "2",
+  "search_status" : "Approved" 
+}
