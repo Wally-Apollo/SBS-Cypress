@@ -21,13 +21,13 @@ function searchWithOneField(fieldId,value){
 
 context('INVENTORY', () => {
     beforeEach(() => {
-        cy.visit('http://172.17.13.253:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
         // cy.get('[id^=password]').contains('Password');
-        const username = '0920013';
-        const password = '920013';
+        const username = '711001';
+        const password = '711001';
         cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
           cy.get('[id^=username]').type(sbs_credentials.username)
           cy.get('[id^=password]').type(sbs_credentials.password)

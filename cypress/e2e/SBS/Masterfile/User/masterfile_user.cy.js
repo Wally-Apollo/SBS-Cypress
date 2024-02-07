@@ -34,7 +34,7 @@ function validateUserModule(){
 
 context('Masterfile -> User', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8080/retailplus/login/auth')
+        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');

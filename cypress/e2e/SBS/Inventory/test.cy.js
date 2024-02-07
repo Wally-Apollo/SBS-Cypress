@@ -29,13 +29,13 @@ define('INVENTORY', () => {
 })
 
     beforeEach(() => {
-        cy.visit('http://172.17.13.253:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
         // cy.get('[id^=password]').contains('Password');
-        const username = '0920013';
-        const password = '920013';
+        const username = '711001';
+        const password = '711001';
         cy.get('[id^=username]').type(username);
         cy.get('[id^=password]').type(password);
         cy.get('[id^=submit]').click();

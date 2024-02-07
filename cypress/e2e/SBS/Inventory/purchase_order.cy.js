@@ -221,7 +221,7 @@ context('PURCHASE ORDER', () => {
         //   console.log('WINDOW BEFORE LOAD', win.location.href)
       
         //   // if we're trying to load the page we want to stop, win.stop()
-        //   if (win.location.href === 'http://172.17.13.253:8080/RetailPlusStoreBackend/purchaseOrder/show/1728346623937369406') {
+        //   if (win.location.href === 'http://192.168.64.3:8080/RetailPlusStoreBackend/purchaseOrder/show/1728346623937369406') {
         //     win.stop()
         // cy.readFile('cypress/downloads/purchaseOrder.pdf')
 

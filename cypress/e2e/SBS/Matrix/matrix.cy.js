@@ -17,7 +17,7 @@ function searchWithOneField(fieldId,value){
 
 context('MATRIX', () => {
     beforeEach(() => {
-        cy.visit('http://172.17.13.253:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');

@@ -1,7 +1,7 @@
 {
-    "url":"http://localhost:8080/retailplus/login/auth",
-    "username" : "0920013",
-    "password": "920013",
+    "url":"http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth",
+    "username" : "711001",
+    "password": "711001",
     "audit_username":"1140284",
     "audit_password":"0284114"
 }
