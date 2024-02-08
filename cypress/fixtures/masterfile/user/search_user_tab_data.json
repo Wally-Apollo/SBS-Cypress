@@ -1,0 +1,38 @@
+[
+    {  
+        "externalId": "1234567",
+        "username": "1234567",
+        "firstName": "1234567",
+        "lastName": "1234567"
+    }, {
+        "externalId": "711001",
+        "username": "711001",
+        "firstName": "Apollo",
+        "lastName": "Helpdesk"
+    }, {
+        "externalId": "0000001",
+        "data": [
+            {
+                "purpose": "Primary",
+                "type": "Email Address",
+                "information": "12345",
+                "updated": "2367574158723072878"
+            },{
+                "facility_id": "2003",
+                "facility": "Orion",
+                "role": "SBS_AUDITOR",
+                "from_date": "2017-01-01 00:00:00.0",
+                "thru_date": "",
+                "updated_by": "Abrahan, Tash",
+                "last_updated": "2017-07-19 19:00:00.0"
+            },{
+                "attr_name": "a",
+                "attr_value": "",
+                "from_date": "2024-01-22 00:00:00.0",
+                "thru_date": "",
+                "updated_by": "2367574158723072878",
+                "last_updated": "2024-01-22 15:53:26.0"
+            }
+        ] 
+    }
+]
