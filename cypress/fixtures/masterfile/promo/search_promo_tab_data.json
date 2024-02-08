@@ -1,0 +1,19 @@
+[
+    {
+        "id": "123456",
+        "promoName": "123456",
+        "nonCashMasterCode": "123456",
+        "nonCashCode": "123456"
+    }, {
+        "id": "00044271",
+        "promoName": "Vitasoy Time Bound Promo: Buy Any Vitasoy PET 300ml from 2pm to 8pm, Save P12.00",
+        "nonCashMasterCode": "11230",
+        "nonCashCode": "15665"
+    },
+    {
+        "id": "00044271",
+        "promoName": "Vitasoy Time Bound Promo: Buy Any Vitasoy PET 300ml from 2pm to 8pm, Save P12.00",
+        "description": "Vitasoy Time Bound Promo: Buy Any Vitasoy PET 300ml from 2pm to 8pm, Save P12.00",
+        "facility": "Orion"
+    }
+]
