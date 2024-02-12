@@ -70,14 +70,29 @@ function login() {
 context('Masterfile -> User', () => {
     login();
 
-    it('TC01: S01 - S29', () => {
+    it('TC01: S01 - S05', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('User'); 
 
         cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
             searchSuccess(data[0]);
-            searchSuccess(data[1], true);
+        });
+    });
 
+    it('TC01: S06 - S09', () => {
+        navigateToModule('Masterfile');
+        navigateToSubModule('User'); 
+
+        cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
+            searchSuccess(data[1], true);
+        });
+    });
+
+    it('TC01: S10 - S29', () => {
+        navigateToModule('Masterfile');
+        navigateToSubModule('User'); 
+
+        cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
             cy.get('td').find('a').contains(data[2].externalId).click();
 
             // Go to Contact Info

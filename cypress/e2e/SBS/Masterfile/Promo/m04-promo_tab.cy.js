@@ -69,12 +69,20 @@ function login() {
 context('Masterfile -> Promo', () => {
     login();
 
-    it('TC01: S01 - S15', () => {
+    it('TC01: S01 - S05', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('Promo'); 
 
         cy.fixture('masterfile/promo/search_promo_tab_data').then((data) => {
             searchSuccess(data[0]);
+        });
+    });
+
+    it('TC01: S05 - S15', () => {
+        navigateToModule('Masterfile');
+        navigateToSubModule('Promo'); 
+
+        cy.fixture('masterfile/promo/search_promo_tab_data').then((data) => {
             searchSuccess(data[1], true);
 
             cy.get('td').find('a').contains(data[2].id).click();
