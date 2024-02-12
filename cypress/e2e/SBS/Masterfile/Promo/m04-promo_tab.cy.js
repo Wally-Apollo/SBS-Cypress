@@ -67,9 +67,9 @@ function login() {
 }
 
 context('Masterfile -> Promo', () => {
-        login();
+    login();
 
-        it('Search Promo', () => {
+    it('TC01: S01 - S15', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('Promo'); 
 
