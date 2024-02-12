@@ -80,6 +80,23 @@ function login() {
 context('Matrix -> Planogram', () => {
     login();
 
+    it('Validation of Planogram List page', () => {
+        //Click Master file from the menu
+        navigateToModule('Matrix');
+
+        //Click Planogram from menu list
+        navigateToSubModule('Planogram');
+
+        //Validate that there will be no Error message displayed
+        cy.get('h3').contains('Planogram List');
+        cy.get('label').contains('Document ID');
+        cy.get('label').contains('Reference Id');
+        cy.get('label').contains('Status');
+        cy.get('.sortable').contains('Document Id');
+        cy.get('.sortable').contains('Reference Id');
+        cy.get('.sortable').contains('Status');
+      })
+
     it('TC01: S01 - S05', () => {
         navigateToModule('Matrix');
         navigateToSubModule('Planogram'); 

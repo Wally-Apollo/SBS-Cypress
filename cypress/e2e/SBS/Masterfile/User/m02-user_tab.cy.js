@@ -45,6 +45,23 @@ function navigateThenBack(data) {
     });
 }
 
+function validateUserModule(){
+    //Validate user module content
+    cy.get('h3').contains('User List');
+    cy.get('label').contains('User Id:');
+    cy.get('label').contains('Username:');
+    cy.get('label').contains('First Name:');
+    cy.get('label').contains('Last Name:');
+    cy.get('.btn').contains('Search');
+    cy.get('.sortable').contains('User Id');
+    cy.get('.sortable').contains('First Name');
+    cy.get('.sortable').contains('Last Name');
+    cy.get('.sortable').contains('Username');
+    cy.get('.sortable').contains('Status');
+    cy.get('.sortable').contains('Updated By');
+    cy.get('.sortable').contains('Last Updated');
+}
+
 function login() {
     beforeEach(() => {
         cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
@@ -69,6 +86,17 @@ function login() {
 
 context('Masterfile -> User', () => {
     login();
+
+    it('Validation of User List page', () => {
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click User from menu list
+        navigateToSubModule('User');
+
+        //Validate that there will be no Error message displayed
+        validateUserModule();
+      })
 
     it('TC01: S01 - S05', () => {
         navigateToModule('Masterfile');

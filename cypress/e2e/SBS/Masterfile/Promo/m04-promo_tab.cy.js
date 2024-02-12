@@ -44,6 +44,24 @@ function navigateThenBack(data) {
     });
 }
 
+function validatePromoModule(){
+    //Validate user module content
+    cy.get('h3').contains('Promo List');
+    cy.get('label').contains('Promo ID');
+    cy.get('label').contains('Promo Name');
+    cy.get('label').contains('Non Cash Master Code');
+    cy.get('label').contains('Non Cash Code');
+    cy.get('.btn').contains('Search');
+
+
+    cy.get('.sortable').contains('Promo Id');
+    cy.get('.sortable').contains('Promo Name');
+    cy.get('.sortable').contains('Description');
+    cy.get('.sortable').contains('Limit Per Customer');
+    cy.get('.sortable').contains('Updated By');
+    cy.get('.sortable').contains('Last Updated');
+}
+
 function login() {
     beforeEach(() => {
         cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
@@ -68,6 +86,17 @@ function login() {
 
 context('Masterfile -> Promo', () => {
     login();
+
+    it('Validation of Promo List page', () => {
+        //Click Master file from the menu
+        navigateToModule('Masterfile');
+
+        //Click Promo from menu list
+        navigateToSubModule('Promo');
+
+        //Validate that there will be no Error message displayed
+        validatePromoModule();
+      })
 
     it('TC01: S01 - S05', () => {
         navigateToModule('Masterfile');
