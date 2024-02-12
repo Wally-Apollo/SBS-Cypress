@@ -1,0 +1,36 @@
+[
+    {
+        "f_documentId": "123456"
+    },
+    {
+        "f_documentId": "22_ICM2_20230920"
+    },
+    {
+        "f_referenceId": "36 - Crunch Time"
+    },
+    {
+        "f_locationId": "B01010001"
+    }, 
+    {
+        "data": [ 
+            {
+                "f_status": "Created"
+            },
+            {
+                "f_status": "For Approval"
+            },
+            {
+                "f_status": "Approved"
+            },
+            {
+                "f_status": "Published"
+            },
+            {
+                "f_status": "Cancelled"
+            },
+            {
+                "f_status": "Unpublished"
+            }
+        ]
+    }
+]
