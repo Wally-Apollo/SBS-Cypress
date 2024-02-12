@@ -68,9 +68,9 @@ function login() {
 }
 
 context('Masterfile -> User', () => {
-        login();
+    login();
 
-        it('Search User', () => {
+    it('TC01: S01 - S29', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('User'); 
 
@@ -88,7 +88,7 @@ context('Masterfile -> User', () => {
             navigateToTableModule('Facility User Role');
             navigateThenBack(data[2].data[1]);
 
-            // Go to Facility User Role
+            // Go to Party Info
             navigateToTableModule('Party Info');
             navigateThenBack(data[2].data[2]);
 
