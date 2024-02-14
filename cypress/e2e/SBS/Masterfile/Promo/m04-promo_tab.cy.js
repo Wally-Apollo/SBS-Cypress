@@ -103,7 +103,7 @@ context('Masterfile -> Promo', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('Promo'); 
 
-        cy.fixture('masterfile/promo/search_promo_tab_data').then((data) => {
+        cy.fixture('masterfile/promo/m04-search_promo_tab_data').then((data) => {
             searchSuccess(data[0]);
         });
     });
@@ -112,7 +112,7 @@ context('Masterfile -> Promo', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('Promo'); 
 
-        cy.fixture('masterfile/promo/search_promo_tab_data').then((data) => {
+        cy.fixture('masterfile/promo/m04-search_promo_tab_data').then((data) => {
             searchSuccess(data[1], true);
 
             cy.get('td').find('a').contains(data[2].id).click();

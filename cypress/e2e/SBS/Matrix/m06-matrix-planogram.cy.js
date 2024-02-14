@@ -101,7 +101,7 @@ context('Matrix -> Planogram', () => {
         navigateToModule('Matrix');
         navigateToSubModule('Planogram'); 
 
-        cy.fixture('matrix/planogram_data/search_planogram_tab_data').then((data) => {
+        cy.fixture('matrix/planogram_data/m06-search_planogram_tab_data').then((data) => {
             searchSuccess(data[0]); // incorrect
             searchSuccess(data[1], true); // correct
             searchSuccess(data[2], true, true); // correct, category
@@ -128,7 +128,7 @@ context('Matrix -> Planogram', () => {
         navigateToModule('Matrix');
         navigateToSubModule('Planogram'); 
 
-        cy.fixture('matrix/planogram_data/search_planogram_tab_data').then((data) => {
+        cy.fixture('matrix/planogram_data/m06-search_planogram_tab_data').then((data) => {
             navigateToModule('Matrix');
             navigateToSubModule('Planogram'); 
             searchWithOneField('f_documentId', data[1].f_documentId);

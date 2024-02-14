@@ -120,7 +120,7 @@ context('CYCLE COUNT', () => {
         navigateToModule('Inventory');
         navigateToSubModule('Cycle Count')
 
-        cy.fixture('inventory/cycle_count/cycle_count_tab_data').then((data) => {
+        cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
             searchSuccess(data[0]);
             
             searchSuccess(data[1].type[0], false, true);
@@ -155,7 +155,7 @@ context('CYCLE COUNT', () => {
     //     navigateToModule('Inventory');
     //     navigateToSubModule('Cycle Count')
 
-    //     cy.fixture('inventory/cycle_count/cycle_count_tab_data').then((data) => {
+    //     cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
     //         cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
     //         cy.get('#countDate').click();
     //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();

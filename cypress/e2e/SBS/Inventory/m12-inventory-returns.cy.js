@@ -125,7 +125,7 @@ context('RETURNS', () => {
         navigateToModule('Inventory');
         navigateToSubModule('Returns')
 
-        cy.fixture('inventory/returns_data/returns_tab_data').then((data) => {
+        cy.fixture('inventory/returns_data/m12-returns_tab_data').then((data) => {
             searchSuccess(data[0].docId, data[0].check[0].null); 
             searchSuccess(data[0].supplier, data[0].check[1].null);
 

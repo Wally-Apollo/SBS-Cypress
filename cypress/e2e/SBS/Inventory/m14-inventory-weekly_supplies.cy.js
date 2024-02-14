@@ -124,7 +124,7 @@ context('ORDER', () => {
     it('TC01: S01 - S04', () => {
         navigateToModule('Inventory')
         navigateToSubModule('Weekly Supplies')
-        cy.fixture('inventory/weekly_supplies_data/weekly_supplies_tab_data').then((data) =>{
+        cy.fixture('inventory/weekly_supplies_data/m14-weekly_supplies_tab_data').then((data) =>{
             searchSuccess(data[0])
             searchSuccess(data[1].data[0], data[1].check[0].null, true)
             searchSuccess(data[1].data[1], data[1].check[1].null, true)

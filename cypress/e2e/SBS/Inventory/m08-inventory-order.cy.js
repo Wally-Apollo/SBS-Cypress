@@ -120,7 +120,7 @@ context('ORDER', () => {
         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
         cy.get('.button-align-right > input.btn').click();
 
-        cy.fixture('inventory/order_data/order_tab_data').then((data) => {
+        cy.fixture('inventory/order_data/m08-order_tab_data').then((data) => {
             cy.get('#categorySelection').select(data[0].data[0].categorySelection);
             cy.get('.btn').contains('Edit').click(); 
             cy.get('.btn').contains('Suggest').click(); 
@@ -147,7 +147,7 @@ context('ORDER', () => {
         navigateToModule('Inventory');
         navigateToSubModule('Order')
 
-        cy.fixture('inventory/order_data/order_tab_data').then((data) => {
+        cy.fixture('inventory/order_data/m08-order_tab_data').then((data) => {
             searchSuccess(data[1]);
             searchSuccess(data[2].data[0], data[2].check[0].null, true);
             searchSuccess(data[2].data[1], data[2].check[1].null, true);

@@ -102,7 +102,7 @@ context('Masterfile -> User', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('User'); 
 
-        cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
+        cy.fixture('masterfile/user/m02-search_user_tab_data').then((data) => {
             searchSuccess(data[0]);
         });
     });
@@ -111,7 +111,7 @@ context('Masterfile -> User', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('User'); 
 
-        cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
+        cy.fixture('masterfile/user/m02-search_user_tab_data').then((data) => {
             searchSuccess(data[1], true);
         });
     });
@@ -120,7 +120,7 @@ context('Masterfile -> User', () => {
         navigateToModule('Masterfile');
         navigateToSubModule('User'); 
 
-        cy.fixture('masterfile/user/search_user_tab_data').then((data) => {
+        cy.fixture('masterfile/user/m02-search_user_tab_data').then((data) => {
             cy.get('td').find('a').contains(data[2].externalId).click();
 
             // Go to Contact Info
