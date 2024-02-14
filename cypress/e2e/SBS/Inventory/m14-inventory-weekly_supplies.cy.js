@@ -119,7 +119,7 @@ function validateWeeklySupplies() {
 context('ORDER', () => {
     login();
 
-    // validateWeeklySupplies()
+    validateWeeklySupplies()
 
     it('TC01: S01 - S04', () => {
         navigateToModule('Inventory')
