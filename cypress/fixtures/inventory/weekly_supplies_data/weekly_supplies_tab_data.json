@@ -1,0 +1,32 @@
+[
+    {
+        "wsSlipNo":"123456"
+    },
+    {
+        "data": [ 
+            {
+                "f_status": "Created"
+            },
+            {
+                "f_status": "Completed"
+            },
+            {
+                "f_status": "Cancelled"
+            }
+        ],
+        "check": [ 
+            {
+                "null": false
+            },
+            {
+                "null": false
+            },
+            {
+                "null": false
+            }
+        ],
+        "wsSlipDateFrom": false,
+        "wsSlipDateTo": false,
+        "quantity": "10"
+    }
+]
