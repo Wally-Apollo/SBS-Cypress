@@ -1,0 +1,41 @@
+[
+    {
+        "documentId": "123456"
+    },
+    {
+        "type": [
+            {
+                "f_type": "Physical Count"
+            },
+            {
+                "f_type": "Variance"
+            }
+        ],
+        "status": [
+            {
+                "f_status": "Created"
+            },
+            {
+                "f_status": "Completed"
+            },
+            {
+                "f_status": "Cancelled"
+            }
+        ]
+    },
+    {
+        "referenceId": "123456",
+        "product": "Penshoppe Style Serum Pink 30ml",
+        "quantity": "10",
+        "reason": "Lost"
+    },
+    {
+        "referenceId": "123458"
+    },
+    {
+        "referenceId": "123459",
+        "quantity": "10",
+        "reason": "Lost"
+
+    }
+]
