@@ -1,0 +1,65 @@
+[
+    {
+        "docId": {
+            "apoId": "1234567"
+        },
+        "supplier": {
+            "autoSupplier": "1234567"
+        },
+        "check": [ 
+            {
+                "null": false
+            },
+            {
+                "null": true
+            }
+        ],
+        "returnDateFrom": false,
+        "returnDateTo": true
+    }, {
+        "supplier": [
+            {
+                "data" : "Convenience Distribution Inc. Pasig [CDI]"
+            },
+            {
+                "data" : "Alted Publication",
+                "name": "Peoples Balita",
+                "quantity": "10"
+            }
+        ],
+        "data": [ 
+            {
+                "f_status": "Created"
+            },
+            {
+                "f_status": "Approved"
+            },
+            {
+                "f_status": "Completed"
+            },
+            {
+                "f_status": "Cancelled"
+            },
+            {
+                "f_status": "For Approval"
+            }
+        ],
+        "check": [ 
+            {
+                "null": false
+            },
+            {
+                "null": false
+            },
+            {
+                "null": false
+            },
+            {
+                "null": false
+            },
+            {
+                "null": false
+            }
+        ]
+    }
+]

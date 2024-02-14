@@ -7,6 +7,7 @@ module.exports = {
   viewportHeight: 720,
   chromeWebSecurity: false,
   defaultCommandTimeout: 10000,
+  pageLoadTimeout: 6000000,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

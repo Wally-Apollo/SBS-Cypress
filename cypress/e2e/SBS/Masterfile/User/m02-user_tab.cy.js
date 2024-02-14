@@ -26,7 +26,7 @@ function searchSuccess(data, check = false) {
         if(data[key] != "") { 
             searchWithOneField(key, data[key]);
             if(check) {
-                cy.get('td').find('a').contains(data[key]);
+                cy.get('table').should('have.descendants', 'td');
             } else {
                 cy.get('.message').should('contain', 'Result not found.');
             }

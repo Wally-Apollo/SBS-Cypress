@@ -26,13 +26,13 @@
         ],
         "check": [ 
             {
-                "null": true
-            },
-            {
-                "null": true
-            },
-            {
                 "null": false
+            },
+            {
+                "null": true
+            },
+            {
+                "null": true
             }
         ]
     }

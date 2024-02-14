@@ -106,12 +106,12 @@ context('Matrix -> Planogram', () => {
             searchSuccess(data[1], true); // correct
             searchSuccess(data[2], true, true); // correct, category
 
-            searchSuccess(data[4].data[0], false, true);
-            searchSuccess(data[4].data[1], false, true);
-            searchSuccess(data[4].data[2], false, true);
-            searchSuccess(data[4].data[3], true, true);
-            searchSuccess(data[4].data[4], false, true);
-            searchSuccess(data[4].data[5], false, true);
+            searchSuccess(data[4].data[0], data[4].check[0].null, true);
+            searchSuccess(data[4].data[1], data[4].check[1].null, true);
+            searchSuccess(data[4].data[2], data[4].check[2].null, true);
+            searchSuccess(data[4].data[3], data[4].check[3].null, true);
+            searchSuccess(data[4].data[4], data[4].check[4].null, true);
+            searchSuccess(data[4].data[5], data[4].check[5].null, true);
 
             searchWithOneField('f_documentId', data[1].f_documentId);
             cy.get('td').find('a').contains(data[1].f_documentId).click();
