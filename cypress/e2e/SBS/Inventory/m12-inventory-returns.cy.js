@@ -57,23 +57,25 @@ function searchClear(check = false) {
 
 function login() {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
-        cy.contains('Username');
-        cy.contains('Password');
-        cy.contains('Login');
-        cy.fixture('sbs_credentials/sbs_credentials.json').then((login_data) =>{
-            cy.get('[id^=username]').type(login_data.username);
-            cy.get('[id^=password]').type(login_data.password);
-        })
-        cy.get('[id^=submit]').click();
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+            cy.visit(sbs_credentials.url)
+            cy.contains('Username');
+            cy.contains('Password');
+            cy.contains('Login');
+            cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+                cy.get('[id^=username]').type(sbs_credentials.username)
+                cy.get('[id^=password]').type(sbs_credentials.password)
+                cy.get('[id^=submit]').click()
 
-        cy.contains('Masterfile');
-        cy.contains('Matrix');
-        cy.contains('Inventory');
-        cy.contains('Sales');
-        cy.contains('Report');
-        cy.contains('Misc');
-        cy.contains('Sign out');
+                cy.contains('Masterfile');
+                cy.contains('Matrix');
+                cy.contains('Inventory');
+                cy.contains('Sales');
+                cy.contains('Report');
+                cy.contains('Misc');
+                cy.contains('Sign out');
+            })
+        })
     })
 }
 
