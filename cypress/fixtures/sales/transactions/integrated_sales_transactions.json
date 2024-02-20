@@ -1,0 +1,57 @@
+[
+    {
+        "search": {
+            "receipt_number":"200000026",
+            "pos_number":"2",
+            "status":"Completed"
+        },
+        "show": {
+            "receipt_number":"200000026",
+            "total_amount": "PHP54.00"
+        }
+    },
+    {
+        "search": {
+            "receipt_number":"200000027",
+            "pos_number":"2",
+            "status":"Completed"
+        },
+        "show": {
+            "receipt_number":"200000027",
+            "total_amount": "PHP23.00"
+        }
+    },
+    {
+        "search": {
+            "receipt_number":"200000028",
+            "pos_number":"2",
+            "status":"Completed"
+        },
+        "show": {
+            "receipt_number":"200000028",
+            "total_amount": "PHP21.00"
+        }
+    },
+    {
+        "search": {
+            "receipt_number":"200000029",
+            "pos_number":"2",
+            "status":"Completed"
+        },
+        "show": {
+            "receipt_number":"200000029",
+            "total_amount": "PHP260.00"
+        }
+    },
+    {
+        "search": {
+            "receipt_number":"200000030",
+            "pos_number":"2",
+            "status":"Completed"
+        },
+        "show": {
+            "receipt_number":"200000030",
+            "total_amount": "PHP155.00"
+        }
+    }
+]
