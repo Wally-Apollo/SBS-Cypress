@@ -1,0 +1,192 @@
+[
+    {
+        "eventType": [
+            {
+                "f_type": "ApplicationShutdown"
+            },
+            {
+                "f_type": "ApplicationStart"
+            },
+            {
+                "f_type": "ApplicationUpdateEnd"
+            },
+            {
+                "f_type": "ApplicationUpdateStart"
+            },
+            {
+                "f_type": "BackupEnd"
+            },
+            {
+                "f_type": "BackupStart"
+            },
+            {
+                "f_type": "BeepPayment"
+            },
+            {
+                "f_type": "BeepPaymentFailed"
+            },
+            {
+                "f_type": "BeepTopUp"
+            },
+            {
+                "f_type": "BeepTopUpFailed"
+            },
+            {
+                "f_type": "CancelCashDrop"
+            },
+            {
+                "f_type": "CancelDayEnd"
+            },
+            {
+                "f_type": "CancelShiftEnd"
+            },
+            {
+                "f_type": "CancelTransaction"
+            },
+            {
+                "f_type": "CashAdd"
+            },
+            {
+                "f_type": "CashDrop"
+            },
+            {
+                "f_type": "ClockIn"
+            },
+            {
+                "f_type": "ClockOut"
+            },
+            {
+                "f_type": "DayEnd"
+            },
+            {
+                "f_type": "DayStart"
+            },
+            {
+                "f_type": "EcpayTimeOutConnection"
+            },
+            {
+                "f_type": "FailedEcpayTransaction"
+            },
+            {
+                "f_type": "ItemCreate"
+            },
+            {
+                "f_type": "ItemRefund"
+            },
+            {
+                "f_type": "ItemVoid"
+            },
+            {
+                "f_type": "JournalPrint"
+            },
+            {
+                "f_type": "JournalSearch"
+            },
+            {
+                "f_type": "JournalView"
+            },
+            {
+                "f_type": "LastSyncTime"
+            },
+            {
+                "f_type": "LogIn"
+            },
+            {
+                "f_type": "LogOut"
+            },
+            {
+                "f_type": "PosLock"
+            },
+            {
+                "f_type": "PosUnlock"
+            },
+            {
+                "f_type": "PriceLookup"
+            },
+            {
+                "f_type": "PriceReference"
+            },
+            {
+                "f_type": "PrintBillsPayment"
+            },
+            {
+                "f_type": "PrintMerchSales"
+            },
+            {
+                "f_type": "PrintServiceSales"
+            },
+            {
+                "f_type": "PrintShiftReading"
+            },
+            {
+                "f_type": "PrintTotalSales"
+            },
+            {
+                "f_type": "PrintXReading"
+            },
+            {
+                "f_type": "PrintZReport"
+            },
+            {
+                "f_type": "ReceiptRefund"
+            },
+            {
+                "f_type": "ReceiptReprint"
+            },
+            {
+                "f_type": "ReceiptStampFailed"
+            },
+            {
+                "f_type": "ReceiptStampSuccess"
+            },
+            {
+                "f_type": "RemittancePayinTimeoutConnection"
+            },
+            {
+                "f_type": "RemittancePayoutTimeoutConnection"
+            },
+            {
+                "f_type": "RestoreEnd"
+            },
+            {
+                "f_type": "RestoreStart"
+            },
+            {
+                "f_type": "RewardFailed"
+            },
+            {
+                "f_type": "Sale"
+            },
+            {
+                "f_type": "SevenConnectTimeoutConnection"
+            },
+            {
+                "f_type": "ShiftEnd"
+            },
+            {
+                "f_type": "ShiftReading"
+            },
+            {
+                "f_type": "ShiftStart"
+            },
+            {
+                "f_type": "SyncFailed"
+            },
+            {
+                "f_type": "TrainingEnd"
+            },
+            {
+                "f_type": "TrainingStart"
+            },
+            {
+                "f_type": "TubeDrop"
+            },
+            {
+                "f_type": "VatExemptPwd"
+            },
+            {
+                "f_type": "VatExemptPwdSales"
+            }
+        ]        
+    }
+]
