@@ -103,26 +103,27 @@ context('Sales -> Cash Drop', () => {
         navigateToModule('Sales');
         navigateToSubModule('Cash Drop');
         
-        cy.fixture('sales/cash_drop/m2').then((data) => {
-            //Search Using POS Number
-            cy.get('[name="autoPosTerminal"]').type(data.pos_number);
-            cy.get('.btn').contains('Search').click();
-            const posNumber = 'POS ' + data.pos_number;
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(1).contains(posNumber);
-                }
-            })
-            cy.get('.btn').contains('Clear').click();      
+        cy.fixture('sales/cash_drop/m26-sales-cash_drop').then((data) => {
+            searchSuccess(data[0]);
+            
+            searchSuccess(data[1].data[0], false, true)
+            searchSuccess(data[1].data[1], false, true)
+            searchSuccess(data[1].data[2], false, true)
+            searchSuccess(data[1].data[3], false, true)
+            searchSuccess(data[1].data[4], false, true)
+            searchSuccess(data[1].data[5], false, true)
+            searchSuccess(data[1].data[6], false, true)
+            searchSuccess(data[1].data[7], false, true)
+            searchSuccess(data[1].data[8], false, true)
+            searchSuccess(data[1].data[9], false, true)
 
-            //Search Using Status
-            cy.get('[id^=shiftNo]').select(data.shift);
-            cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.shift);
-                }
-            })
+            cy.get('#fromDate').click()
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            searchClear();
+
+            cy.get('#thruDate').click()
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            searchClear();
         })
     })
 })
