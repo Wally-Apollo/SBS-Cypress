@@ -106,16 +106,9 @@ context('Sales -> Cash Drop', () => {
         cy.fixture('sales/cash_drop/m26-sales-cash_drop').then((data) => {
             searchSuccess(data[0]);
             
-            searchSuccess(data[1].data[0], false, true)
-            searchSuccess(data[1].data[1], false, true)
-            searchSuccess(data[1].data[2], false, true)
-            searchSuccess(data[1].data[3], false, true)
-            searchSuccess(data[1].data[4], false, true)
-            searchSuccess(data[1].data[5], false, true)
-            searchSuccess(data[1].data[6], false, true)
-            searchSuccess(data[1].data[7], false, true)
-            searchSuccess(data[1].data[8], false, true)
-            searchSuccess(data[1].data[9], false, true)
+            for (let i =  0; i <  data[0].data.length; i++) {
+                searchSuccess(data[1].data[i], false, true)
+            }
 
             cy.get('#fromDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
