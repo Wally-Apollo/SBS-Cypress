@@ -146,7 +146,7 @@ context('CYCLE COUNT', () => {
             cy.get('#reason').select(data[2].reason);
             cy.get('.btn').contains('Add').click(); 
             cy.get('.btn').contains('Save').click(); 
-            cy.get('.btn').contains('Completed').click(); 
+            cy.get('.btn').contains('Complete').click(); 
             cy.get('.btn').contains('Print').click(); 
             cy.get('.btn').contains('<< Back to').click(); 
         });
