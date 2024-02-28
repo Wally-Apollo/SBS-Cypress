@@ -1,0 +1,17 @@
+[
+    {
+        "status": "Closed"
+    },
+    {
+        "status": "Active"
+    },
+    {
+        "status": "Open"
+    },
+    {
+        "status": "Inactive"
+    },
+    {
+        "status": "Under Renovation"
+    }
+]
