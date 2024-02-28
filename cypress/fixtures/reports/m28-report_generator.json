@@ -1,0 +1,47 @@
+[
+    {
+        "rn": [
+            {
+                "reportName": "test"
+            },
+            {
+                "reportName": "shelf"
+            }
+        ],
+        "data": [ 
+            {
+                "f_reportType": "Inventory Report"
+            },
+            {
+                "f_reportType": "Pos Report"
+            },
+            {
+                "f_reportType": "Sales Report"
+            },
+            {
+                "f_reportType": "Take-on Report"
+            },
+            {
+                "f_reportType": "Audit Report"
+            },
+            {
+                "f_reportType": "No Report Type"
+            }
+        ]
+    },
+    {
+        "adjustment": "10",
+        "count_per_audit": "10",
+        "merchandise": "10",
+        "percent_of_sales": "10",
+        "beginning_sales": "10",
+        "bm": "10",
+        "pt": "10",
+        "rl": "10",
+        "sts": "10",
+        "su": "10",
+        "listCategory": "36 - Crunch Time",
+        "pos": "1",
+        "shift": "1"
+    }
+]
