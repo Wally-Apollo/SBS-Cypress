@@ -1,0 +1,39 @@
+[
+    {
+        "autoPosTerminal": "1"
+    }, 
+    {
+        "data": [ 
+            {
+                "shiftNo": "1"
+            },
+            {
+                "shiftNo": "2"
+            },
+            {
+                "shiftNo": "3"
+            },
+            {
+                "shiftNo": "4"
+            },
+            {
+                "shiftNo": "5"
+            },
+            {
+                "shiftNo": "6"
+            },
+            {
+                "shiftNo": "7"
+            },
+            {
+                "shiftNo": "8"
+            },
+            {
+                "shiftNo": "9"
+            },
+            {
+                "shiftNo": "10"
+            }
+        ]
+    }
+]
