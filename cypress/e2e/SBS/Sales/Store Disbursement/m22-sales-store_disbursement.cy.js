@@ -139,7 +139,6 @@ context('Sales -> Store Disbursement', () => {
             cy.get('#referenceId').type(data[2].referenceId)
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            searchClear(data[1].wsSlipDateFrom);
 
             cy.get('.btn').contains('Save').click(); 
             cy.get('.btn').contains('Print').click(); 
@@ -153,7 +152,6 @@ context('Sales -> Store Disbursement', () => {
             cy.get('#referenceId').type(data[2].referenceId)
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            searchClear(data[1].wsSlipDateFrom);
             
             cy.get('.btn').contains('Save').click(); 
             cy.get('.btn').contains('Edit').click(); 

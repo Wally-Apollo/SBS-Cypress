@@ -153,26 +153,30 @@ context('CYCLE COUNT', () => {
 
     })
 
-    // it('TC01: S06', ()=>{
-    //     navigateToModule('Inventory');
-    //     navigateToSubModule('Cycle Count')
+    it('TC01: S06', ()=>{
+        navigateToModule('Inventory');
+        navigateToSubModule('Cycle Count')
 
-    //     cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
-    //         cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
-    //         cy.get('#countDate').click();
-    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-    //         cy.get('#referenceId').type(data[3].referenceId);
-    //         cy.get('.btn').contains('Save').click(); 
+        cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
+            cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
+            cy.get('#countDate').click();
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('#referenceId').type(data[3].referenceId);
+            cy.get('.btn').contains('Save').click(); 
 
-            // cy.get('.btn').contains('Cancel').click(); 
-            // cy.get('.btn').contains('<< Back to').click(); 
+            cy.get('.btn').contains('<< Back to').click(); 
 
-            // cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
-            // cy.get('#countDate').click();
-            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            // cy.get('#referenceId').type(data[4].referenceId);
-            // cy.get('.btn').contains('Save').click(); 
-            // cy.get('.btn').contains('<< Back to').click(); 
-    //     });
-    // })
+            cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
+            cy.get('#countDate').click();
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('#referenceId').type(data[4].referenceId);
+
+            // type physical count
+            // product
+            // quantity
+            // reason
+            cy.get('.btn').contains('Save').click(); 
+            cy.get('.btn').contains('<< Back to').click(); 
+        });
+    })
 })

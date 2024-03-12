@@ -122,13 +122,13 @@ context('Sales -> Modules Validation', () => {
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             searchClear();
 
-            cy.get('.btn').contains('New Modules Validation'),click()
+            cy.get('.pull-right > .btn').click()
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('.btn').contains('Save').click();
             cy.get('.btn').contains('<< Back to').click(); 
 
-            cy.get('.btn').contains('New Modules Validation'),click()
+            cy.get('.pull-right > .btn').click()
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('.btn').contains('Save').click();

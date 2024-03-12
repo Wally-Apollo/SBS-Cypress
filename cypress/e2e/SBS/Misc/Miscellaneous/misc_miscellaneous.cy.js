@@ -66,11 +66,11 @@ context('Misc -> Miscellaneous', () => {
         navigateToSubModule('Miscellaneous');
 
         cy.get('.btn').contains('Generate POS Database').click(); 
-        const posDataFolder = "C:\pos_db"
-        const fs = require('fs');
-        fs.readdirSync(posDataFolder).forEach(file =>{
-            cy.log(file);
-        });
+        // const posDataFolder = "C:\pos_db"
+        // const fs = require('fs');
+        // fs.readdirSync(posDataFolder).forEach(file =>{
+        //     cy.log(file);
+        // });
         
     })    
 

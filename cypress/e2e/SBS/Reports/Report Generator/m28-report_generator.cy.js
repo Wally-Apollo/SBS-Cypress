@@ -61,9 +61,9 @@ function validateModule(){
 }
 
 function validateShowReport(report){
-    cy.get('.btn').contains('Generate').click()
     cy.get('tr').find('td').contains(report).click();
     cy.get('h3').contains('Show Report');
+    cy.get('.btn').contains('Generate').click()
     // cy.get('.btn').contains('Back to Report List').click();     
 }
 
@@ -134,6 +134,9 @@ context('Reports -> Report Generator', () => {
             searchSuccess(data[0].data[3], true, true)
             searchSuccess(data[0].data[4], true, true)
             searchSuccess(data[0].data[5], true, true)
+
+            cy.get('.btn').contains('Clear').click();
+            cy.get('.btn').contains('Search').click();
 
             // go to page 2 but theres no page 2
 

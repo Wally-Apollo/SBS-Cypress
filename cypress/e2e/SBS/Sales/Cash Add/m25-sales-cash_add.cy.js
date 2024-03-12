@@ -67,6 +67,29 @@ function validateModule(){
     cy.get('.sortable').contains('Amount');
 }
 
+function login() {
+    beforeEach(() => {
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+            cy.visit(sbs_credentials.url)
+            cy.contains('Username');
+            cy.contains('Password');
+            cy.contains('Login');
+            cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+                cy.get('[id^=username]').type(sbs_credentials.username)
+                cy.get('[id^=password]').type(sbs_credentials.password)
+                cy.get('[id^=submit]').click()
+
+                cy.contains('Masterfile');
+                cy.contains('Matrix');
+                cy.contains('Inventory');
+                cy.contains('Sales');
+                cy.contains('Report');
+                cy.contains('Misc');
+                cy.contains('Sign out');
+            })
+        })
+    })
+}
 
 
 context('Sales -> Cash Add', () => {
@@ -91,9 +114,9 @@ context('Sales -> Cash Add', () => {
             //Search Using POS Number
             searchSuccess(data[0])
             
-            for (let i =  0; i <  data[0].data.length; i++) {
-                searchSuccess(data[1].data[i], false, true)
-            }
+            cy.wrap(data[1].data).each((item) => {
+                searchSuccess(item, false, true);
+            });
 
             cy.get('#fromDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();

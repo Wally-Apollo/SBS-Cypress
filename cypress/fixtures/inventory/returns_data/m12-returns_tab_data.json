@@ -11,11 +11,11 @@
                 "null": false
             },
             {
-                "null": true
+                "null": false
             }
         ],
         "returnDateFrom": false,
-        "returnDateTo": true
+        "returnDateTo": false
     }, {
         "supplier": [
             {
