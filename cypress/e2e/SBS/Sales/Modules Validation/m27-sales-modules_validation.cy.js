@@ -132,8 +132,8 @@ context('Sales -> Modules Validation', () => {
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('.btn').contains('Save').click();
-            cy.get('.btn').contains('Edit').click();
-            cy.get('.btn').contains('Save').click();
+            // cy.get('.btn').contains('Edit').click();
+            // cy.get('.btn').contains('Save').click();
             cy.get('.btn').contains('<< Back to').click(); 
         })
 

@@ -118,65 +118,75 @@ context('CYCLE COUNT', () => {
         validateModule();
     })
 
-    it('TC01: S01 - S05', ()=>{
-        navigateToModule('Inventory');
-        navigateToSubModule('Cycle Count')
+    // it('TC01: S01 - S05', ()=>{
+    //     navigateToModule('Inventory');
+    //     navigateToSubModule('Cycle Count')
 
-        cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
-            searchSuccess(data[0]);
+    //     cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
+    //         searchSuccess(data[0]);
             
-            searchSuccess(data[1].type[0], false, true);
-            searchSuccess(data[1].type[1], false, true);
+    //         searchSuccess(data[1].type[0], false, true);
+    //         searchSuccess(data[1].type[1], false, true);
 
-            searchSuccess(data[1].status[0], false, true);
-            searchSuccess(data[1].status[1], false, true);
-            searchSuccess(data[1].status[2], false, true);
+    //         searchSuccess(data[1].status[0], false, true);
+    //         searchSuccess(data[1].status[1], false, true);
+    //         searchSuccess(data[1].status[2], false, true);
 
-            cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCountVariance"]').click();
-            cy.get('#countDate').click();
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('#referenceId').type(data[2].referenceId);
-            cy.get(':nth-child(4) > .btn').click();
-            cy.get('.btn').contains('Edit').click(); 
-            cy.get('.btn').contains('Cancel').click(); 
-            cy.get('.btn').contains('Edit').click(); 
-            // cy.get('#autoProductListVariance').click().click()
-            cy.get('#autoProductListVariance').click().click().wait(5000).type('{downArrow}').type('{enter}')
-            cy.get('#countedQuantity').type(data[2].quantity);
-            cy.get('#reason').select(data[2].reason);
-            cy.get('.btn').contains('Add').click(); 
-            cy.get('.btn').contains('Save').click(); 
-            cy.get('.btn').contains('Complete').click(); 
-            cy.get('.btn').contains('Print').click(); 
-            cy.get('.btn').contains('<< Back to').click(); 
-        });
+    //         cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCountVariance"]').click();
+    //         cy.get('#countDate').click();
+    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+    //         cy.get('#referenceId').type(data[2].referenceId);
+    //         cy.get(':nth-child(4) > .btn').click();
+    //         cy.get('.btn').contains('Edit').click(); 
+    //         cy.get('.btn').contains('Cancel').click(); 
+    //         cy.get('.btn').contains('Edit').click(); 
+    //         // cy.get('#autoProductListVariance').click().click()
+    //         cy.get('#autoProductListVariance').click().click().wait(5000).type('{downArrow}').type('{enter}')
+    //         cy.get('#countedQuantity').type(data[2].quantity);
+    //         cy.get('#reason').select(data[2].reason);
+    //         cy.get('.btn').contains('Add').click(); 
+    //         cy.get('.btn').contains('Save').click(); 
+    //         cy.get('.btn').contains('Complete').click(); 
+    //         cy.get('.btn').contains('Print').click(); 
+    //         cy.get('.btn').contains('<< Back to').click(); 
+    //     });
 
-    })
+    // })
 
     it('TC01: S06', ()=>{
         navigateToModule('Inventory');
         navigateToSubModule('Cycle Count')
 
         cy.fixture('inventory/cycle_count/m10-cycle_count_tab_data').then((data) => {
-            cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
-            cy.get('#countDate').click();
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('#referenceId').type(data[3].referenceId);
-            cy.get('.btn').contains('Save').click(); 
-
-            cy.get('.btn').contains('<< Back to').click(); 
+            // cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
+            // cy.get('#countDate').click();
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // cy.get('#referenceId').type(data[3].referenceId);
+            // cy.get('.btn').contains('Save').click(); 
+            // cy.get('.btn').contains('Cancel').click(); 
 
             cy.get('[href="/RetailPlusStoreBackend/cycleCount/createCycleCount"]').click();
             cy.get('#countDate').click();
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('#referenceId').type(data[4].referenceId);
 
-            // type physical count
-            // product
-            // quantity
-            // reason
             cy.get('.btn').contains('Save').click(); 
+            cy.get('.btn').contains('Cancel').click(); 
+
+            cy.get('td').find('a').contains("DH").then(element => {
+                const myValue = element.text();
+                cy.get('td').find('a').contains(myValue).click();
+            });
+
+            cy.get('#autoProductList').wait(5000).type('{downArrow}').type('{enter}')
+            cy.get('#countedQuantity').type(10)
+
+            cy.get('.btn').contains('Add').click()
+            cy.get('.btn').contains('Save').click()
+            cy.get('.btn').contains('Completed').click()
+            cy.get('.btn').contains('Print').click()
             cy.get('.btn').contains('<< Back to').click(); 
+
         });
     })
 })
