@@ -9,10 +9,7 @@
   "author": "miguel-apollo",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^13.13.0",
+    "cypress": "^7.6.0",
     "cypress-file-upload": "^5.0.8"
-  },
-  "dependencies": {
-    "cypress-real-events": "^1.13.0"
   }
 }
