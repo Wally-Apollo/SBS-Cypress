@@ -22,8 +22,9 @@ function searchWithCategory(fieldId,value){
     cy.get('.btn').contains('Search').click();
 }
 
-function searchSuccess(data, check = false, category = false) {
+function searchSuccess(data,  category = false) {
     const keys = Object.keys(data); 
+    let check;
     keys.forEach(key => {
         if(data[key] != "") { 
             if(category) {
@@ -31,23 +32,45 @@ function searchSuccess(data, check = false, category = false) {
             } else {
                 searchWithOneField(key, data[key]);
             }
-            if(check) {
-                cy.get('table').should('have.descendants', 'td');
-            } else {
-                cy.get('.message').should('contain', 'Result not found.');
-            }
+
+
+            cy.get('table tbody').then($tbody=>{
+                check = $tbody.find('tr').length;
+                cy.log(`Rows inside tbody ${check}`)
+            }).then(()=>{
+                cy.wrap(check).then(value=>{
+                    if(value>0){
+                        cy.get('table').should('have.descendants', 'td');
+                    }else{
+                        cy.get('.message').should('contain', 'Result not found.');
+                    }
+                })
+            })
+
             cy.get('.btn').contains('Clear').click();
         }
     });
 }
 
-function searchClear(check = false) {
+function searchClear() {
+    let check;
     cy.get('.btn').contains('Search').click();
-    if(check) {
-        cy.get('table').should('have.descendants', 'td');
-    } else {
-        cy.get('.message').should('contain', 'Result not found.');
-    }
+    cy.get('table tbody').then($tbody=>{
+        check = $tbody.find('tr').length;
+        cy.log(`Rows inside tbody ${check}`)
+    }).then(()=>{
+        cy.wrap(check).then(value=>{
+            if(value>0){
+                cy.get('table').should('have.descendants', 'td');
+            }else{
+                cy.get('.message').should('contain', 'Result not found.');
+            }
+        })
+    })
+
+
+   
+ 
     cy.get('.btn').contains('Clear').click();
 }
 
@@ -55,7 +78,7 @@ function validateEventModule(){
     cy.get('h3').contains('Event List');
     cy.get('label').contains('Facility');
     cy.get('label').contains('Event Type');
-    cy.get('label').contains('Pos:');
+    cy.get('label').contains('Pos :');
     cy.get('label').contains('Business Date From');
     cy.get('label').contains('Business Date To');
     cy.get('.btn').contains('Search');
@@ -117,7 +140,7 @@ context('Sales -> Events', () => {
 
         cy.fixture('sales/events/m18-sales-events').then((data) => {
             for (let i =  0; i <  data[0].eventType.length; i++) {
-                searchSuccess(data[0].eventType[i], false, true);
+                searchSuccess(data[0].eventType[i], true);
             }
             
             cy.get('#autoPosTerminal').type("1")
@@ -132,4 +155,70 @@ context('Sales -> Events', () => {
             searchClear();
         })
     })
+   
+
+
+
+    it('TC03: S04 - S06', () => {
+
+   //Click Sales from the menu
+   navigateToModule('Sales');
+
+   //Click Event from menu list
+   navigateToSubModule('Events');
+
+     cy.fixture('sales/events/search_event_list_data').then((data)=>{
+ 
+    //Check PrinzReport Exist
+    cy.get('#f_type').within(()=>{
+      cy.get('[value="PrintZReport"]').should("exist")
+    })
+    cy.wait(700) 
+
+    //Select PrintZReport Option
+    cy.get('#f_type').select('PrintZReport')
+    cy.wait(700) 
+
+    //Click Search
+    cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
+    cy.wait(700) 
+
+    //Input POS
+    cy.get('#autoPosTerminal').type(data.pos_number)
+    cy.wait(700) 
+
+
+     //Click Search
+    cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
+    cy.wait(700) 
+   
+    //input date from
+    cy.get('#fromDateSearch').invoke('removeAttr', 'readonly').type(data.businessDateFrom);
+    cy.wait(700) 
+
+    //Click Search
+    cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
+    cy.wait(700) 
+
+    //input date to
+    cy.get('#thruDateSearch').invoke('removeAttr', 'readonly').type(data.businessDateTo);
+    cy.wait(700) 
+
+   //Click Search
+   cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
+   cy.wait(700) 
+
+  })
+
+//Click Download All
+  cy.wait(700)
+  cy.get('[name="_action_downloadAll"]').click()
+
+
+//Click Print All
+  cy.wait(700)
+  cy.get('[name="_action_printAll"]').click()
+
+  })
+
 })

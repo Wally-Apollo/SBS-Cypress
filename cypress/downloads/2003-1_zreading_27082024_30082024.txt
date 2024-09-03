@@ -1,0 +1,260 @@
+
+  Philippine Seven Corporation
+Owned & Operated by: Philippine
+       Seven Corporation
+  VATREGTIN #000-390-189-1027
+    11th Ave. cor. 38th St.,
+     Bonifacio Global City,
+  Bicutan, Taguig, Philippines
+       Tel #: (02)0000000
+
+    08/28/2024(Wed) 11:36:29
+
+********************************
+      * (SI / Z Report) *
+********************************
+POS:1                SN#:9Z00119
+STORE#:2003                     
+BIR Accr#:116-000390189-000346-1
+Permit #:
+ FP092021-116-0302241-00000
+MIN #: 21092915573670475        
+SI Series Beg 00000001          
+SI Series End 00000047          
+======  ACCUMULATED TOTAL ======
+DESCRIPTION   CNT         AMOUNT
+--------------------------------
+ENDING SI READING               
+                        10122.00
+SALES RESET                     
+                0               
+RECEIPT RESET                   
+                0               
+============  SALES ============
+DESCRIPTION               AMOUNT
+--------------------------------
+GROSS MERCHANDISE SALES
+                        10122.00
+RECEIPT REFUND
+                          135.00
+ITEM REFUND
+                           45.00
+TOTAL REFUND
+                          180.00
+TOTAL MERCHANDISE SALES
+                         9942.00
+PROMO DISCOUNT
+                           52.00
+SENIOR CITIZEN DISCOUNT
+                          144.86
+PERSONS WITH DISABILITY DISCOUNT
+                           50.50
+SOLO PARENT DISCOUNT
+                          452.30
+TOTAL DISCOUNT
+                          699.66
+NET MERCHANDISE SALES
+                         9242.34
+VATABLE MERC. SALES
+                         4552.65
+VAT AMT: MERC. SALES
+                          546.35
+VAT EXEMPT: MERC. SALES
+                         1437.00
+VAT EXEMPT: SC SALES
+                           76.04
+VAT EXEMPT: PWD SALES
+                           69.94
+VAT EXEMPT: SP SALES
+                         2895.12
+ZERO RATED SALES
+                          385.05
+VAT EXEMPT SC
+                           56.87
+VAT EXEMPT PWD
+                            9.53
+VAT EXEMPT SP
+                          542.47
+VAT EXEMPT ZR
+                            0.00
+*************  END *************
+  Philippine Seven Corporation
+Owned & Operated by: Philippine
+       Seven Corporation
+  VATREGTIN #000-390-189-1027
+    11th Ave. cor. 38th St.,
+     Bonifacio Global City,
+  Bicutan, Taguig, Philippines
+       Tel #: (02)0000000
+
+    08/28/2024(Wed) 11:36:29
+
+********************************
+      * (AR / Z Report) *
+********************************
+POS:1                SN#:9Z00119
+STORE#:2003                     
+BIR Accr#:116-000390189-000346-1
+Permit #:
+ FP092021-116-0302241-00000
+MIN #: 21092915573670475        
+AR Beg: 00000001                
+AR End: 00000015                
+======  ACCUMULATED TOTAL ======
+DESCRIPTION   CNT         AMOUNT
+--------------------------------
+ENDING AR                       
+                         3128.00
+SALES RESET                     
+                0               
+RECEIPT RESET                   
+                0               
+============  SALES ============
+DESCRIPTION               AMOUNT
+--------------------------------
+GROSS AR
+                         3128.00
+TOTAL REFUND
+                            0.00
+NET AR
+                         3128.00
+TOTAL COST PAYABLE
+                         2628.90
+TOTAL AR COMMISSION
+                          499.10
+VATABLE AR COMMISSION
+                          445.63
+VAT AMT: AR COMMISSION
+                           53.47
+*************  END *************
+
+
+
+  Philippine Seven Corporation
+Owned & Operated by: Philippine
+       Seven Corporation
+  VATREGTIN #000-390-189-1027
+    11th Ave. cor. 38th St.,
+     Bonifacio Global City,
+  Bicutan, Taguig, Philippines
+       Tel #: (02)0000000
+
+    08/29/2024(Thu) 17:40:31
+
+********************************
+      * (SI / Z Report) *
+********************************
+POS:1                SN#:9Z00119
+STORE#:2003                     
+BIR Accr#:116-000390189-000346-1
+Permit #:
+ FP092021-116-0302241-00000
+MIN #: 21092915573670475        
+SI Series Beg 00000001          
+SI Series End 00000066          
+======  ACCUMULATED TOTAL ======
+DESCRIPTION   CNT         AMOUNT
+--------------------------------
+ENDING SI READING               
+                        12613.00
+SALES RESET                     
+                0               
+RECEIPT RESET                   
+                0               
+============  SALES ============
+DESCRIPTION               AMOUNT
+--------------------------------
+GROSS MERCHANDISE SALES
+                        12613.00
+RECEIPT REFUND
+                          240.00
+ITEM REFUND
+                           95.00
+TOTAL REFUND
+                          335.00
+TOTAL MERCHANDISE SALES
+                        12278.00
+PROMO DISCOUNT
+                           74.00
+SENIOR CITIZEN DISCOUNT
+                          239.44
+PERSONS WITH DISABILITY DISCOUNT
+                          104.27
+SOLO PARENT DISCOUNT
+                          509.36
+TOTAL DISCOUNT
+                          927.07
+NET MERCHANDISE SALES
+                        11350.93
+VATABLE MERC. SALES
+                         6123.61
+VAT AMT: MERC. SALES
+                          734.84
+VAT EXEMPT: MERC. SALES
+                         2931.00
+VAT EXEMPT: SC SALES
+                          199.04
+VAT EXEMPT: PWD SALES
+                          181.90
+VAT EXEMPT: SP SALES
+                         3328.83
+ZERO RATED SALES
+                          459.16
+VAT EXEMPT SC
+                           85.27
+VAT EXEMPT PWD
+                           27.21
+VAT EXEMPT SP
+                          610.90
+VAT EXEMPT ZR
+                            0.00
+*************  END *************
+  Philippine Seven Corporation
+Owned & Operated by: Philippine
+       Seven Corporation
+  VATREGTIN #000-390-189-1027
+    11th Ave. cor. 38th St.,
+     Bonifacio Global City,
+  Bicutan, Taguig, Philippines
+       Tel #: (02)0000000
+
+    08/29/2024(Thu) 17:40:31
+
+********************************
+      * (AR / Z Report) *
+********************************
+POS:1                SN#:9Z00119
+STORE#:2003                     
+BIR Accr#:116-000390189-000346-1
+Permit #:
+ FP092021-116-0302241-00000
+MIN #: 21092915573670475        
+AR Beg: 00000001                
+AR End: 00000021                
+======  ACCUMULATED TOTAL ======
+DESCRIPTION   CNT         AMOUNT
+--------------------------------
+ENDING AR                       
+                         5076.00
+SALES RESET                     
+                0               
+RECEIPT RESET                   
+                0               
+============  SALES ============
+DESCRIPTION               AMOUNT
+--------------------------------
+GROSS AR
+                         5076.00
+TOTAL REFUND
+                            0.00
+NET AR
+                         5076.00
+TOTAL COST PAYABLE
+                         4473.86
+TOTAL AR COMMISSION
+                          602.14
+VATABLE AR COMMISSION
+                          537.63
+VAT AMT: AR COMMISSION
+                           64.51
+*************  END *************
