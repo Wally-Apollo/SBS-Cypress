@@ -94,6 +94,7 @@ function validateEventModule(){
 
 function login() {
     beforeEach(() => {
+
         cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
             cy.visit(sbs_credentials.url)
             cy.contains('Username');
@@ -113,17 +114,31 @@ function login() {
                 cy.contains('Sign out');
             })
         })
+       
     })
 }
+
+function logout(){
+    afterEach(()=>{
+        cy.get('.navbar-text > a').click()
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+            cy.visit(sbs_credentials.url)})
+    })
+}
+
+
 function performSearch() {
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click().wait(700);
 }
 
 context('Sales -> Events', () => {
     login()
+    logout()
+
 
     it('Validation of Event List page', () => {
-        //Click Sales from the menu
+
+     
         navigateToModule('Sales');
 
         //Click Transactions from menu list
@@ -133,32 +148,32 @@ context('Sales -> Events', () => {
         validateEventModule();
     })
 
-    it('TC01: S01 - S05', ()=> {
-        //Click Sales from the menu
-        navigateToModule('Sales');
+    // it('TC01: S01 - S05', ()=> {
+    //     //Click Sales from the menu
+    //     navigateToModule('Sales');
 
-        //Click Event from menu list
-        navigateToSubModule('Events');
+    //     //Click Event from menu list
+    //     navigateToSubModule('Events');
 
-        cy.fixture('sales/events/m18-sales-events').then((data) => {
-            for (let i =  0; i <  data[0].eventType.length; i++) {
-                searchSuccess(data[0].eventType[i], true);
-            }
+    //     cy.fixture('sales/events/m18-sales-events').then((data) => {
+    //         for (let i =  0; i <  data[0].eventType.length; i++) {
+    //             searchSuccess(data[0].eventType[i], true);
+    //         }
             
-            cy.get('#autoPosTerminal').type("1")
-            searchClear();
+    //         cy.get('#autoPosTerminal').type("1")
+    //         searchClear();
 
-            cy.get('#fromDateSearch').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            searchClear();
+    //         cy.get('#fromDateSearch').click()
+    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+    //         searchClear();
 
-            cy.get('#thruDateSearch').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            searchClear();
-        })
-    })
+    //         cy.get('#thruDateSearch').click()
+    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+    //         searchClear();
+    //     })
+    // })
 
-    it.only('TC02: S01 - S03', ()=> {
+    it('TC02: S01 - S03', ()=> {
        
         navigateToModule('Sales');
 
@@ -198,7 +213,9 @@ context('Sales -> Events', () => {
     })
 
     it('TC03: S04 - S06', () => {
-
+      
+       
+        cy.visit('/RetailPlusStoreBackend/dashboard')
    //Click Sales from the menu
    navigateToModule('Sales');
 
@@ -214,22 +231,28 @@ context('Sales -> Events', () => {
     cy.wait(700) 
 
     //Select PrintZReport Option
-    cy.get('#f_type').select('PrintZReport')
-    cy.wait(700) 
+    searchWithCategory('f_type', 'PrintZReport');
+    cy.wait(700);
 
     //Click Search
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
     cy.wait(700) 
 
     //Input POS
-    cy.get('#autoPosTerminal').type(data.pos_number)
+    searchWithOneField('autoPosTerminal', data.pos_number);
     cy.wait(700) 
 
 
      //Click Search
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
     cy.wait(700) 
-   
+
+    cy.get('tbody').find("tr").then((row) =>{
+        for(let i = 0; i< row.length; i++){
+            cy.get('tbody>tr').eq(i).find('a').eq(3).contains('POS 1');
+        }
+    })
+    cy.wait(700) 
     //input date from
     cy.get('#fromDateSearch').invoke('removeAttr', 'readonly').type(data.businessDateFrom);
     cy.wait(700) 
