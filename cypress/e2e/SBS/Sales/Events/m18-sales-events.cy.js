@@ -12,13 +12,13 @@ function navigateToSubModule(subModule){
 
 function searchWithOneField(fieldId,value){
     const field = `[id^=${fieldId}]`;
-    cy.get(field).type(value);
+    cy.get(field).type(value).wait(700);
     cy.get('.btn').contains('Search').click();
 }
 
 function searchWithCategory(fieldId,value){
     const field = `[id^=${fieldId}]`;
-    cy.get(field).select(value);
+    cy.get(field).select(value).wait(700);
     cy.get('.btn').contains('Search').click();
 }
 
@@ -115,7 +115,9 @@ function login() {
         })
     })
 }
-
+function performSearch() {
+    cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click().wait(700);
+}
 
 context('Sales -> Events', () => {
     login()
@@ -155,9 +157,45 @@ context('Sales -> Events', () => {
             searchClear();
         })
     })
-   
 
+    it.only('TC02: S01 - S03', ()=> {
+       
+        navigateToModule('Sales');
 
+        navigateToSubModule('Events');
+        //SO1
+            cy.get('#f_type').within(()=>{
+            cy.get('[value="Sale"]').should("exist")
+            })
+            cy.wait(700);
+
+            searchWithCategory('f_type', 'Sale');
+            cy.wait(700);
+
+            searchWithOneField('autoPosTerminal', '1');
+            cy.wait(700);
+            cy.get('tbody').find("tr").then((row) =>{
+                for(let i = 0; i< row.length; i++){
+                    cy.get('tbody>tr').eq(i).find('a').eq(3).contains('POS 1');
+                }
+            })
+
+            cy.get('#fromDateSearch').click();
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            performSearch();
+            
+            cy.get('#thruDateSearch').click();
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            performSearch();
+           
+        //SO2
+            cy.wait(700);
+            cy.get('[name="_action_downloadAll"]').click().wait(700);
+        //SO3
+            cy.wait(700);
+            cy.get('[name="_action_printAll"]').click();
+        
+    })
 
     it('TC03: S04 - S06', () => {
 
