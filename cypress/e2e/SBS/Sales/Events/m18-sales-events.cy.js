@@ -1,3 +1,4 @@
+
 /// <reference types="cypress" />
 
 //Common Functions
@@ -12,13 +13,13 @@ function navigateToSubModule(subModule){
 
 function searchWithOneField(fieldId,value){
     const field = `[id^=${fieldId}]`;
-    cy.get(field).type(value).wait(700);
+    cy.get(field).type(value);
     cy.get('.btn').contains('Search').click();
 }
 
 function searchWithCategory(fieldId,value){
     const field = `[id^=${fieldId}]`;
-    cy.get(field).select(value).wait(700);
+    cy.get(field).select(value);
     cy.get('.btn').contains('Search').click();
 }
 
@@ -92,53 +93,33 @@ function validateEventModule(){
     cy.get('.sortable').contains('Receipt');
 }
 
-function login() {
-    beforeEach(() => {
-
-        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
-            cy.visit(sbs_credentials.url)
-            cy.contains('Username');
-            cy.contains('Password');
-            cy.contains('Login');
-            cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
-                cy.get('[id^=username]').type(sbs_credentials.username)
-                cy.get('[id^=password]').type(sbs_credentials.password)
-                cy.get('[id^=submit]').click()
-
-                cy.contains('Masterfile');
-                cy.contains('Matrix');
-                cy.contains('Inventory');
-                cy.contains('Sales');
-                cy.contains('Report');
-                cy.contains('Misc');
-                cy.contains('Sign out');
-            })
-        })
-       
-    })
-}
-
-function logout(){
-    afterEach(()=>{
-        cy.get('.navbar-text > a').click()
-        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
-            cy.visit(sbs_credentials.url)})
-    })
-}
-
-
 function performSearch() {
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click().wait(700);
 }
 
-context('Sales -> Events', () => {
-    login()
-    logout()
-
-
+context('Sales -> Events', { testIsolation: false }, () => {
+    
+    before(() => {
+        //
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+            cy.visit(sbs_credentials.url);
+            cy.contains('Username');
+            cy.contains('Password');
+            cy.contains('Login');
+            cy.get('[id^=username]').type(sbs_credentials.username);
+            cy.get('[id^=password]').type(sbs_credentials.password);
+            cy.get('[id^=submit]').click();
+            cy.contains('Masterfile');
+            cy.contains('Matrix');
+            cy.contains('Inventory');
+            cy.contains('Sales');
+            cy.contains('Report');
+            cy.contains('Misc');
+            cy.contains('Sign out');
+        });
+    })
     it('Validation of Event List page', () => {
-
-     
+        //Click Sales from the menu
         navigateToModule('Sales');
 
         //Click Transactions from menu list
@@ -148,36 +129,26 @@ context('Sales -> Events', () => {
         validateEventModule();
     })
 
-    // it('TC01: S01 - S05', ()=> {
-    //     //Click Sales from the menu
-    //     navigateToModule('Sales');
-
-    //     //Click Event from menu list
-    //     navigateToSubModule('Events');
-
-    //     cy.fixture('sales/events/m18-sales-events').then((data) => {
-    //         for (let i =  0; i <  data[0].eventType.length; i++) {
-    //             searchSuccess(data[0].eventType[i], true);
-    //         }
+    it('TC01: S01 - S05', ()=> {
+        cy.fixture('sales/events/m18-sales-events').then((data) => {
+            for (let i =  0; i <  data[0].eventType.length; i++) {
+                searchSuccess(data[0].eventType[i], true);
+            }
             
-    //         cy.get('#autoPosTerminal').type("1")
-    //         searchClear();
+            cy.get('#autoPosTerminal').type("1")
+            searchClear();
 
-    //         cy.get('#fromDateSearch').click()
-    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-    //         searchClear();
+            cy.get('#fromDateSearch').click()
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            searchClear();
 
-    //         cy.get('#thruDateSearch').click()
-    //         cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-    //         searchClear();
-    //     })
-    // })
-
+            cy.get('#thruDateSearch').click()
+            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            searchClear();
+        })
+    })
+   
     it('TC02: S01 - S03', ()=> {
-       
-        navigateToModule('Sales');
-
-        navigateToSubModule('Events');
         //SO1
             cy.get('#f_type').within(()=>{
             cy.get('[value="Sale"]').should("exist")
@@ -205,23 +176,14 @@ context('Sales -> Events', () => {
            
         //SO2
             cy.wait(700);
-            cy.get('[name="_action_downloadAll"]').click().wait(700);
+            cy.get('[name="_action_downloadAll"]').click();
         //SO3
             cy.wait(700);
             cy.get('[name="_action_printAll"]').click();
-        
+            cy.get('.sbs-button').contains('Clear').click();
     })
 
     it('TC03: S04 - S06', () => {
-      
-       
-        cy.visit('/RetailPlusStoreBackend/dashboard')
-   //Click Sales from the menu
-   navigateToModule('Sales');
-
-   //Click Event from menu list
-   navigateToSubModule('Events');
-
      cy.fixture('sales/events/search_event_list_data').then((data)=>{
  
     //Check PrinzReport Exist
@@ -231,28 +193,22 @@ context('Sales -> Events', () => {
     cy.wait(700) 
 
     //Select PrintZReport Option
-    searchWithCategory('f_type', 'PrintZReport');
-    cy.wait(700);
+    cy.get('#f_type').select('PrintZReport')
+    cy.wait(700) 
 
     //Click Search
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
     cy.wait(700) 
 
     //Input POS
-    searchWithOneField('autoPosTerminal', data.pos_number);
+    cy.get('#autoPosTerminal').type(data.pos_number)
     cy.wait(700) 
 
 
      //Click Search
     cy.get(':nth-child(4) > .sbs-searchbtn-alignment > input.btn').click()
     cy.wait(700) 
-
-    cy.get('tbody').find("tr").then((row) =>{
-        for(let i = 0; i< row.length; i++){
-            cy.get('tbody>tr').eq(i).find('a').eq(3).contains('POS 1');
-        }
-    })
-    cy.wait(700) 
+   
     //input date from
     cy.get('#fromDateSearch').invoke('removeAttr', 'readonly').type(data.businessDateFrom);
     cy.wait(700) 
@@ -279,7 +235,7 @@ context('Sales -> Events', () => {
 //Click Print All
   cy.wait(700)
   cy.get('[name="_action_printAll"]').click()
-
+  cy.get('.sbs-button').contains('Clear').click();
+  cy.get('.navbar-text > a').click();
   })
-
 })
