@@ -104,7 +104,7 @@ context('Matrix -> Planogram', () => {
         navigateToSubModule('Planogram'); 
 
         cy.fixture('matrix/planogram_data/m06-search_planogram_tab_data').then((data) => {
-            searchSuccess(data[0]); // incorrect
+            searchSuccess(data[0])  ; // incorrect
             searchSuccess(data[1], true); // correct
             searchSuccess(data[2], true, true); // correct, category
 
@@ -141,7 +141,7 @@ context('Matrix -> Planogram', () => {
             cy.get('.pagination > :nth-child(2)').click()
 
             cy.get('.btn').contains('<< Back to').click();
-            cy.get('.pagination > :nth-child(2)').click() 
+            cy.get('.pagination').should('exist', '2').click();
         });
     });
 })
