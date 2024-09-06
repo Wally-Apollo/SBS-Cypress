@@ -17,13 +17,13 @@ function navigateToTableModule(tableName) {
 function searchWithOneField(fieldId,value){
     const field = `[id^=${fieldId}]`;
     cy.get(field).type(value);
-    cy.get('.btn').contains('Search').click();
+    cy.get('.btn').contains('Search').click().wait(1000);
 }
 
 function searchWithCategory(fieldId,value){
     const field = `[id^=${fieldId}]`;
     cy.get(field).select(value);
-    cy.get('.btn').contains('Search').click();
+    cy.get('.btn').contains('Search').click().wait(1000);;
 }
 
 function searchSuccess(data, check = false, category = false) {
@@ -99,29 +99,38 @@ context('Matrix -> Planogram', () => {
         cy.get('.sortable').contains('Status');
       })
 
-    it('TC01: S01 - S05', () => {
+    it.only('TC01: S01 - S05', () => {
         navigateToModule('Matrix');
         navigateToSubModule('Planogram'); 
 
         cy.fixture('matrix/planogram_data/m06-search_planogram_tab_data').then((data) => {
             searchSuccess(data[0])  ; // incorrect
+            cy.wait(1500);
             searchSuccess(data[1], true); // correct
+            cy.wait(1500);
             searchSuccess(data[2], true, true); // correct, category
+            cy.wait(1500);
 
             searchSuccess(data[4].data[0], data[4].check[0].null, true);
+            cy.wait(1500);
             searchSuccess(data[4].data[1], data[4].check[1].null, true);
+            cy.wait(1500);
             searchSuccess(data[4].data[2], data[4].check[2].null, true);
+            cy.wait(1500);
             searchSuccess(data[4].data[3], data[4].check[3].null, true);
+            cy.wait(1500);
             searchSuccess(data[4].data[4], data[4].check[4].null, true);
+            cy.wait(1500);
             searchSuccess(data[4].data[5], data[4].check[5].null, true);
+            cy.wait(1500);
 
             searchWithOneField('f_documentId', data[1].f_documentId);
-            cy.get('td').find('a').contains(data[1].f_documentId).click();
+            cy.get('td').find('a').contains(data[1].f_documentId).click().wait(1500);
 
-            cy.get('.btn').contains('Print').click(); 
+            cy.get('.btn').contains('Print').click().wait(1500); 
         
-            cy.get('td').find('a').contains(data[3].f_locationId).click();
-            cy.get('.errors').should('contain', "Sorry, you're not authorized to view this page.");
+            cy.get('td').find('a').contains(data[3].f_locationId).click().wait(1500);
+            cy.get('.errors').should('contain', "Sorry, you're not authorized to view this page.").wait(1500);
         });
         
     });

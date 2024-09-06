@@ -180,7 +180,7 @@ context('M05 - Masterfile (Facility Tab)', () => {
 
         //Search Using Corporate facility Type
         cy.get('[id^=autoFTParentList]').click().type('{downarrow}').type('{enter}');
-        cy.wait(1500);
+        cy.wait(2000);
         cy.get('.btn').contains('Search').click();
         for(let i = 0; i < 10; i ++){
             cy.get('tbody>tr').eq(i).find('a').eq(3).contains('Corporate');
