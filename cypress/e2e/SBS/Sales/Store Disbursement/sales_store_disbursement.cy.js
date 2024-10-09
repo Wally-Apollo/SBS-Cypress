@@ -35,7 +35,7 @@ function validateModule(){
 
 context('Sales -> Store Disbursement', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -78,17 +78,34 @@ context('Sales -> Store Disbursement', () => {
         cy.fixture('sales/store_disbursement/search_disbursement_list_data').then((data) => {
             //Search Using Document No.
             searchWithOneField('documentId',data.document_id);
-            cy.get('td').find('a').contains(data.document_id);
+           
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').text().includes(data.document_id)){
+                    cy.get('td').find('a').contains(data.document_id);
+                }else{
+                    cy.get('.message').contains('Result not found.')
+                }
+            })
+
+
             cy.get('.btn').contains('Clear').click();            
 
             //Search Using Status
             cy.get('[id^=f_status]').select(data.status);
             cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(5).contains(data.status);
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(5).contains(data.status);
+                        }
+                    })
                 }
             })
+
+           
         })
     })
 

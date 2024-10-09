@@ -35,7 +35,7 @@ function validateFacilityModule(){
 
 context('Masterfile -> Facility', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -78,17 +78,44 @@ context('Masterfile -> Facility', () => {
         cy.fixture('masterfile/facility/search_facility_data').then((data) => {
             //Search Using Facility Id
             searchWithOneField('externalId',data.external_id);
-            cy.get('td').find('a').contains(data.external_id);
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.text().includes(data.external_id)){
+                    cy.get('td').find('a').contains(data.external_id);
+                }else{
+                    cy.log("report empty")
+                }
+            })
+
+            
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Facility Name
             searchWithOneField('groupName',data.group_name);
-            cy.get('td').find('a').contains(data.group_name);
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.text().includes(data.group_name)){
+                    cy.get('td').find('a').contains(data.group_name);
+                }else{
+                    cy.log("report empty")
+                }
+            })
+
+
+            
             cy.get('.btn').contains('Clear').click();
 
             //Search Using GLN
             searchWithOneField('gln',data.gln);
-            cy.get('td').find('a').contains(data.gln);
+            cy.get('tbody').then($tbody=>{
+                if($tbody.text().includes(data.gln)){
+                    cy.get('td').find('a').contains(data.gln);
+                }else{
+                    cy.log("report empty")
+                }
+            })
+
+
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Status

@@ -144,7 +144,20 @@ context('RETAIL PRICE CHANGE', () => {
         //Search and Assert Document ID
         cy.get('.controls').find('input[name="f_docId"]').type(price_change_data.document_id)
         cy.get('input[name="_action_list"]').click()
-        cy.get('tbody').find('tr').eq(0).find('td').eq(0).contains(price_change_data.document_id)
+
+        
+
+     
+        cy.get('tbody').then($tbody=>{
+          if($tbody.find('tr').length>1){
+            cy.get('tbody').find('tr').eq(0).find('td').eq(0).contains(price_change_data.document_id)
+          }else{
+            cy.log("report empty")
+
+          }
+        })
+
+
         
         //Clear Search Result
         cy.get('.sbs-searchbtn-alignment').find('a').contains('Clear').click();

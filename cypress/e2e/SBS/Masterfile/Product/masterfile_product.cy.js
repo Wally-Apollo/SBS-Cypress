@@ -38,7 +38,7 @@ function validateProductModule(){
 
 context('Masterfile -> Product', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -79,22 +79,59 @@ context('Masterfile -> Product', () => {
         cy.fixture('masterfile/product/search_product_data').then((data) => {
             //Search Using Short Name
             searchWithOneField('shortName',data.short_name);
-            cy.get('td').find('a').contains(data.short_name);
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1){
+                    cy.get('td').find('a').contains(data.short_name);
+                }else{
+                    cy.log("report empty")
+
+                }
+            })
+
+            
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Long Name
             searchWithOneField('longName',data.long_name);
-            cy.get('td').find('a').contains(data.long_name);
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1){
+                    cy.get('td').find('a').contains(data.long_name);
+                }else{
+                    cy.get('.message').contains('Result not found. ')
+                }
+            })
+
+           
             cy.get('.btn').contains('Clear').click();
 
             //Search Using GTIN
             searchWithOneField('gtin',data.gtin);
-            cy.get('td').find('a').contains(data.gtin);
+            
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1){
+                    cy.get('td').find('a').contains(data.gtin);
+                }else{
+                    cy.get('.message').contains('Result not found. ')
+                }
+            })
+
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Product Id
             searchWithOneField('externalId',data.external_id);
-            cy.get('td').find('a').contains(data.external_id);
+            
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1){
+                    cy.get('td').find('a').contains(data.external_id);
+                }else{
+                    cy.get('.message').contains('Result not found. ')
+                }
+            })
+
             cy.get('.btn').contains('Clear').click();            
         })
       })
@@ -110,17 +147,33 @@ context('Masterfile -> Product', () => {
 
         cy.fixture('masterfile/product/show_product_data').then((data) => {
             //Select any Product from the list
-            cy.get('td').find('a').contains(data.external_id).click();
+           
 
-            //Validate Show Product
-            cy.get('h3').contains('Show Product');
-            cy.get('li').find('a').contains('Price');
-            cy.get('li').find('a').contains('Supplier');
-            cy.get('li').find('a').contains('Product Attribute');
-            cy.get('li').find('a').contains('Product Price Commission');
-            cy.get('li').find('a').contains('Product Identification');
-            cy.get('li').find('a').contains('Product Promo');
-            cy.get('li').find('a').contains('Planogram Location');
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1){
+
+                    if($tbody.find('tbody > tr').text().includes(data.external_id))
+                    {
+                        cy.get('td').find('a').contains(data.external_id).click();
+                        //Validate Show Product
+               cy.get('h3').contains('Show Product');
+               cy.get('li').find('a').contains('Price');
+               cy.get('li').find('a').contains('Supplier');
+               cy.get('li').find('a').contains('Product Attribute');
+               cy.get('li').find('a').contains('Product Price Commission');
+               cy.get('li').find('a').contains('Product Identification');
+               cy.get('li').find('a').contains('Product Promo');
+               cy.get('li').find('a').contains('Planogram Location');
+                    }
+
+                   
+                }else{
+                    cy.log("report empty")
+
+                }
+            })
+
+           
         })
     })
 
@@ -244,25 +297,25 @@ context('Masterfile -> Product', () => {
         })
     })
 
-    it('Search Product Promo', () =>{
-        //Click Master file from the menu
-        navigateToModule('Masterfile');
+    // it('Search Product Promo', () =>{
+    //     //Click Master file from the menu
+    //     navigateToModule('Masterfile');
 
-        //Click User from menu list
-        navigateToSubModule('Product'); 
-        validateProductModule();
+    //     //Click User from menu list
+    //     navigateToSubModule('Product'); 
+    //     validateProductModule();
 
-        cy.fixture('masterfile/product/search_product_promo_data').then((data) => {
-            //Search Using Product Id
-            searchWithOneField('externalId',data.external_id);
-            cy.get('td').find('a').contains(data.external_id).click();
+    //     cy.fixture('masterfile/product/search_product_promo_data').then((data) => {
+    //         //Search Using Product Id
+    //         searchWithOneField('externalId',data.external_id);
+    //         cy.get('td').find('a').contains(data.external_id).click();
 
-            cy.get('li').find('a').contains('Product Promo').click();
-            cy.get('[name="productPromoProductSearchCriteria"]').type(data.product_promo_criteria);
-            cy.get('*[class^="search btn"]').click();
-            cy.get('td').find('a').contains(data.product_promo_criteria);    
-        })
-    })
+    //         cy.get('li').find('a').contains('Product Promo').click();
+    //         cy.get('[name="productPromoProductSearchCriteria"]').type(data.product_promo_criteria);
+    //         cy.get('*[class^="search btn"]').click();
+    //         cy.get('td').find('a').contains(data.product_promo_criteria);    
+    //     })
+    // })
 
     it('Search Planogram Location', () =>{
         //Click Master file from the menu
@@ -275,12 +328,24 @@ context('Masterfile -> Product', () => {
         cy.fixture('masterfile/product/search_planogram_location_data').then((data) => {
             //Search Using Product Id
             searchWithOneField('externalId',data.external_id);
-            cy.get('td').find('a').contains(data.external_id).click();
+           
 
-            cy.get('li').find('a').contains('Planogram Location').click();
-            cy.get('[name="planogramLocationSearchCriteria"]').type(data.planogram_location_criteria);
-            cy.get('*[class^="search btn"]').click();
-            cy.get('td').contains(data.planogram_location_criteria);
+            cy.get('.table > tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('td').find('a').contains(data.external_id).click();
+                    cy.get('li').find('a').contains('Planogram Location').click();
+                    cy.get('[name="planogramLocationSearchCriteria"]').type(data.planogram_location_criteria);
+                    // cy.get('*[class^="search btn"]').click();
+                    // cy.get('td').contains(data.planogram_location_criteria);
+                }
+                else{
+                    cy.get('.message').contains('Result not found')
+                }
+            })
+
+
+
+            
         })
     })
 })

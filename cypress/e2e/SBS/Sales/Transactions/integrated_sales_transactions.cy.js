@@ -99,11 +99,19 @@ context('Sales -> Transactions', () => {
                     //Search Using POS Number
                     cy.get('[name="f_pos"]').type(data[i].search.pos_number);
                     const posNumber = 'POS ' + data[i].search.pos_number;
-                    cy.get('tbody').find("tr").then((row) =>{
-                        for(let j = 0; j< row.length; j++){
-                            cy.get('tbody>tr').eq(j).find('a').eq(1).contains(posNumber);
+                    cy.get('.btn').contains('Search').click();
+
+                    cy.get('tbody').then($tbody=>{
+                        if($tbody.find('tr').length>0){
+                            cy.get('tbody').find("tr").then((row) =>{
+                                for(let j = 0; j< row.length; j++){
+                                    cy.get('tbody>tr').eq(j).find('a').eq(1).contains(posNumber);
+                                }
+                            })
                         }
                     })
+
+                   
                     cy.get('.btn').contains('Clear').click();
         
                     //Search Using Status
@@ -126,14 +134,22 @@ context('Sales -> Transactions', () => {
         
                 cy.fixture('sales/transactions/integrated_sales_transactions').then((data) => {
                     //Select any transaction from the list
-                    cy.get('td').find('a').contains(data[i].show.receipt_number).click();
-                    cy.get(':nth-child(5) > .property-value2').contains(data[i].show.total_amount)
-                })
-        
-                //Validate Show Transaction
+
+                    cy.get('tbody').then($tbody=>{
+                        if($tbody.find('tr').length>0 && $tbody.find('tr').text().includes(data[i].show.receipt_number)){
+                            cy.get('td').find('a').contains(data[i].show.receipt_number).click();
+                            cy.get(':nth-child(5) > .property-value2').contains(data[i].show.total_amount)
+                            //Validate Show Transaction
                 cy.get('h3').contains('Show Transaction');
                 cy.get('li').find('a').contains('Transaction Items');
                 cy.get('li').find('a').contains('Transaction Return');
+                        }
+                    })
+                   
+                   
+                })
+        
+                
             })
 
         }

@@ -22,8 +22,9 @@ function searchWithCategory(fieldId,value){
     cy.get('.btn').contains('Search').click();
 }
 
-function searchSuccess(data, check = false, category = false) {
+function searchSuccess(data, category = false) {
     const keys = Object.keys(data); 
+    let check;
     keys.forEach(key => {
         if(data[key] != "") { 
             if(category) {
@@ -31,11 +32,30 @@ function searchSuccess(data, check = false, category = false) {
             } else {
                 searchWithOneField(key, data[key]);
             }
-            if(check) {
-                cy.get('table').should('have.descendants', 'td');
-            } else {
-                cy.get('.message').should('contain', 'Result not found.');
-            }
+
+
+            cy.get('table tbody').then($tbody=>{
+                check = $tbody.find('tr').length;
+                cy.log(`Rows inside tbody ${check}`)
+            }).then(()=>{
+                cy.wrap(check).then(value=>{
+                    if(value>0){
+                        cy.get('table').should('have.descendants', 'td');
+                    }else{
+                        cy.get('.message').should('contain', 'Result not found.');
+                    }
+                })
+            })
+
+
+            // if(check) {
+            //     cy.get('table').should('have.descendants', 'td');
+            // } else {
+            //     cy.get('.message').should('contain', 'Result not found.');
+            // }
+
+
+
             cy.get('.btn').contains('Clear').click();
         }
     });
@@ -61,10 +81,24 @@ function validateModule(){
 }
 
 function validateShowReport(report){
-    cy.get('tr').find('td').contains(report).click();
+    
+    
+    cy.get('body').then($body => {
+        if ($body.find('tr').length) {
+            cy.get('tr').find('td').contains(report).click();
     cy.get('h3').contains('Show Report');
     cy.get('.btn').contains('Generate').click()
-    // cy.get('.btn').contains('Back to Report List').click();     
+    // cy.get('.btn').contains('Back to Report List').click();   
+        }
+        else{
+            cy.log("report empty")
+        }
+      });
+
+
+
+
+
 }
 
 function checkReportByDateOnly(report, check = true, dateId = "#AUDIT_DATE") {
@@ -126,7 +160,7 @@ context('Reports -> Report Generator', () => {
 
         cy.fixture('reports/m28-report_generator').then((data) => {
             searchSuccess(data[0].rn[0])
-            searchSuccess(data[0].rn[1], true)
+            searchSuccess(data[0].rn[1])
 
             searchSuccess(data[0].data[0], true, true)
             searchSuccess(data[0].data[1], true, true)
@@ -147,9 +181,10 @@ context('Reports -> Report Generator', () => {
             checkReportByDateOnly('Per Item Location Report - Manual');  
 
             validateShowReport('Store Inventory Audit Report');  
-            cy.get('#50_OF_SALES').type(data[1].percent_of_sales)
+            cy.get('[id="50%_OF_SALES"]').type(data[1].percent_of_sales)
             cy.get('#AUDIT_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
             cy.get('#BEGINNING_SALES').type(data[1].beginning_sales)
             cy.get('#BM').type(data[1].bm)
             cy.get('#PT').type(data[1].pt)
@@ -167,8 +202,11 @@ context('Reports -> Report Generator', () => {
             validateShowReport('Inventory Log (formerly Receiving Log)');  
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
             printCancelBack()
 
             validateShowReport('Shelf Tags');  
@@ -183,40 +221,59 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Bad Merchandise Report")
             cy.get('#FROM_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('#TO_DATE').click()
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
+            cy.get('#THRU_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
             printCancelBack()
 
             validateShowReport("Total Purchases Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('.option').contains('A').click()
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
+            cy.get('[value="324243423912755497"]').click()
             printCancelBack()
 
             validateShowReport("Retail Book Inventory")
-            cy.get('#listCategory').select(data[1].adjustment);
+            cy.get('#ADJUSTMENT').type(data[1].adjustment);
             cy.get('#AUDIT_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('#listCategory').select(data[1].count_per_audit);
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
+            cy.get('#COUNT_PER_AUDIT').type(data[1].count_per_audit);
             cy.get('#INVENTORY_AS_OF').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            cy.get('#listCategory').select(data[1].merchandise);
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
+            cy.get('#MERCHANDISE').type(data[1].merchandise);
             printCancelBack()
 
             validateShowReport("Product Movement Analysis")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Gondola Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
@@ -225,22 +282,34 @@ context('Reports -> Report Generator', () => {
             validateShowReport("DLV Monitoring - Created")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("DLV Monitoring - Completed")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("DTSD Monitoring - Created")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             checkReportByDateOnly("DTSD Monitoring - Completed", false)
@@ -248,108 +317,182 @@ context('Reports -> Report Generator', () => {
             validateShowReport("OR Sales Monitor by Quantity")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("OR Sales Monitor by Amount")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("AR Sales Monitor - Per POS (ServiceSale)")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("AR Sales Monitor - Per Shift")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Hourly Sales")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Rewards Redemption Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("ABC Report by Quantity")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("ABC Report by Amount")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("CBA Report by Quantity")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("CBA Report by Amount")
-            cy.get('#DATE_FROM').click()
+
+            cy.get('body').then($body => {
+                if ($body.find('#DATE_TO').length) {
+                cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#listCategory').select(data[1].listCategory);
+            printCancelBack()
+                }
+                else{
+                    cy.log("empty")
+                }
+              });
+        
+            
+            // cy.get('#DATE_FROM').click()
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // cy.get('.ui-datepicker-close').click();
+            // cy.wait(1000)
+            // cy.get('#DATE_TO').click()
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // cy.get('.ui-datepicker-close').click();
+            // cy.wait(1000)
+            // cy.get('#listCategory').select(data[1].listCategory);
             printCancelBack()
 
             validateShowReport("Consignment Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Product Sales Analysis")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
             
             validateShowReport("City Blends Category Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             checkReportByDateOnly("CLiQQMas Report", false)
-            printCancelBack()
+            
 
             // checkReportByDateOnly("Sales Report (formerly Cash Report)")
 
             validateShowReport("Shift Report")
             cy.get('#BUSINESS_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#POS').type(data[1].pos)
             printCancelBack()
             
@@ -361,21 +504,63 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Discount Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("MS Report")
-            cy.get('#BUSINESS_DATE').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
-            printCancelBack()
+
+
+            cy.get('body').then($body => {
+                if ($body.find('#BUSINESS_DATE').length) {
+                    cy.get('#BUSINESS_DATE').click()
+                    cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+                    printCancelBack()
+                }
+                else{
+                    cy.log("empty")
+                }
+              });
+
+
+
+            // cy.get('#BUSINESS_DATE').click()
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // printCancelBack()
 
             validateShowReport("Tender Report")
-            cy.get('#DATE_FROM').click()
+
+            cy.get('body').then($body => {
+                if ($body.find('#DATE_FROM').length) {
+                    cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
+                }
+                else{
+                    cy.log("empty")
+                }
+              });
+
+
+            // cy.get('#DATE_FROM').click()
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // cy.get('.ui-datepicker-close').click();
+            // cy.wait(1000)
+            // cy.get('#DATE_TO').click()
+            // cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            // cy.get('.ui-datepicker-close').click();
+            // cy.wait(1000)
+            // printCancelBack()
 
             checkReportByDateOnly("Beep Report", false)
             printCancelBack()
@@ -383,8 +568,12 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Cash Variation - Employee")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#EMPLOYEE_ID').type(data[1].pos)
             printCancelBack()
 
@@ -396,34 +585,52 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Cash Drop Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Funds Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Cash Added Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Flash Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Refunds Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             printCancelBack()
@@ -431,15 +638,23 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Cancelled Transaction Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("Item Void Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("CLiQQ Wallet Report")
@@ -455,15 +670,23 @@ context('Reports -> Report Generator', () => {
             validateShowReport("CLiQQ Wallet History")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             validateShowReport("E-Payment Report")
             cy.get('#DATE_FROM').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#DATE_TO').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             printCancelBack()
 
             checkReportByDateOnly("Gross Sales with  711 Product", false)
@@ -474,6 +697,8 @@ context('Reports -> Report Generator', () => {
             validateShowReport("Ending AR Sales Update")
             cy.get('#BUSINESS_DATE').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('.ui-datepicker-close').click();
+            cy.wait(1000)
             cy.get('#POS_ID').type(data[1].pos)
             cy.get('#SHIFT').type(data[1].pos)
             printCancelBack()

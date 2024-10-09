@@ -24,11 +24,17 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // Ignore the specific error
-    if (err.message.includes('$.jGrowl is not a function')) {
-       return false; // Prevents Cypress from failing the test
-    }
-    // You can also log the error to the console for debugging purposes
-    console.log(err.message);
+Cypress.on("uncaught:exception", (err, runnable) => {
+  // Ignore the specific error
+  if (err.message.includes("$.jGrowl is not a function")) {
+    return false; // Prevents Cypress from failing the test
+  }
+  // You can also log the error to the console for debugging purposes
+  console.log(err.message);
 });
+// Cypress.on("command:enqueued", (command) => {
+//   // If the command is not 'wait', add a wait after every other command
+//   if (command.name !== "wait") {
+//     cy.wait(500); // Adjust the wait time (in ms) as needed
+//   }
+// });

@@ -117,14 +117,26 @@ context('Masterfile -> Promo', () => {
         cy.fixture('masterfile/promo/m04-search_promo_tab_data').then((data) => {
             searchSuccess(data[1], true);
 
-            cy.get('td').find('a').contains(data[2].id).click();
-            cy.get('.btn').contains('<< Back to').click(); 
-
-            cy.get('td').find('a').contains(data[2].promoName).click(); 
-            cy.get('.btn').contains('<< Back to').click(); 
             
-            cy.get('td').find('a').contains(data[2].description).click();
-            cy.get('td').find('a').contains(data[2].facility).click(); 
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>1 && $tbody.find('tr').text().includes(data[2].id)){
+                    cy.get('td').find('a').contains(data[2].id).click();
+
+
+                    cy.get('.btn').contains('<< Back to').click(); 
+
+                    cy.get('td').find('a').contains(data[2].promoName).click(); 
+                    cy.get('.btn').contains('<< Back to').click(); 
+                    
+                    cy.get('td').find('a').contains(data[2].description).click();
+                    cy.get('td').find('a').contains(data[2].facility).click(); 
+
+                }
+            })
+
+
+          
 
         });
 

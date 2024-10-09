@@ -1,4 +1,7 @@
-module.exports = {
+
+const { defineConfig } = require('cypress');
+
+module.exports = defineConfig({
   fixturesFolder: 'cypress/fixtures',
   screenshotsFolder: 'cypress/screenshots',
   videosFolder: 'cypress/videos',
@@ -10,6 +13,7 @@ module.exports = {
   pageLoadTimeout: 10000000,
   redirectionLimit: 1000,
   e2e: {
+    experimentalInteractiveRunEvents: true,
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
@@ -17,4 +21,4 @@ module.exports = {
     },
     baseUrl:"http://localhost:8080",
   },
-}
+})

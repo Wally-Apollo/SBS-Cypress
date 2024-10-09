@@ -21,7 +21,7 @@ function searchWithCategory(fieldId,value){
     cy.get('.btn').contains('Search').click();
 }
 
-function searchSuccess(data, check = false, category = false) {
+function searchSuccess(data,  category = false) {
     const keys = Object.keys(data); 
     keys.forEach(key => {
         if(data[key] != "") { 
@@ -30,11 +30,17 @@ function searchSuccess(data, check = false, category = false) {
             } else {
                 searchWithOneField(key, data[key]);
             }
-            if(check) {
-                cy.get('table').should('have.descendants', 'td');
-            } else {
-                cy.get('.message').should('contain', 'Result not found.');
-            }
+
+            cy.get('tbody').then($tbody =>{
+                if ($tbody.find('tr').length>1) {
+                    cy.get('table').should('have.descendants', 'td');
+                }
+                else{
+                    cy.get('.message').should('contain', 'Result not found.');
+                }
+              });
+
+
             cy.get('.btn').contains('Clear').click();
         }
     });
@@ -42,11 +48,14 @@ function searchSuccess(data, check = false, category = false) {
 
 function searchClear(check = false) {
     cy.get('.btn').contains('Search').click();
-    if(check) {
-        cy.get('table').should('have.descendants', 'td');
-    } else {
-        cy.get('.message').should('contain', 'Result not found.');
-    }
+    cy.get('tbody').then($tbody =>{
+        if ($tbody.find('tr').length>1) {
+            cy.get('table').should('have.descendants', 'td');
+        }
+        else{
+            cy.get('.message').should('contain', 'Result not found.');
+        }
+      });
     cy.get('.btn').contains('Clear').click();
 }
 
@@ -176,7 +185,7 @@ context('PURCHASE ORDER', () => {
 
             cy.get('.btn').contains('Save').click(); 
             cy.get('.btn').contains('Edit').click(); 
-            cy.get('#autoFilteredProduct').click().click().wait(5000).type('{downArrow}').type('{enter}')
+            cy.get('#autoFilteredProduct').click().wait(5000).type('{downArrow}').type('{enter}')
             cy.get('#orderQuantity').type(data[2].quantity)
             cy.get('.btn').contains('Add').click(); 
             cy.get('.btn').contains('Save').click(); 

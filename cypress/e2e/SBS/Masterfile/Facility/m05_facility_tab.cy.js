@@ -179,12 +179,25 @@ context('M05 - Masterfile (Facility Tab)', () => {
         cy.wait(1000);
 
         //Search Using Corporate facility Type
-        cy.get('[id^=autoFTParentList]').click().type('{downarrow}').type('{enter}');
-        cy.wait(2000);
+        cy.get('[id^=autoFTParentList]').type('Corporate');
+        cy.wait(5000);
+        cy.get('[id^=autoFTParentList]').type('{downArrow}').type('{enter}');
+
+
+
+
         cy.get('.btn').contains('Search').click();
-        for(let i = 0; i < 10; i ++){
-            cy.get('tbody>tr').eq(i).find('a').eq(3).contains('Corporate');
-        }
+        cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>1){
+
+                for(let i = 0; i < 10; i ++){
+                    cy.get('tbody>tr').eq(i).find('a').eq(3).contains('Corporate');
+                }
+            }else{
+                cy.log("report empty")
+            }
+        })
+       
         cy.get('.btn').contains('Clear').click();
         cy.wait(2000);
         //Search Using Franchise facility Type

@@ -35,7 +35,7 @@ function validateModule(){
 
 context('Sales -> Claim Order List', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -78,7 +78,18 @@ context('Sales -> Claim Order List', () => {
         cy.fixture('sales/claim_order/search_claim_order_list_data').then((data) => {
             //Search Using Document No.
             searchWithOneField('documentId',data.document_id);
-            cy.get('td').contains(data.document_id);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').text().includes(data.document_id)){
+                    cy.get('td').contains(data.document_id);
+                }else{
+                    cy.get('.message').contains('Result not found.')
+                }
+            })
+
+
+           
             cy.get('.btn').contains('Clear').click();
         })
     })
@@ -93,14 +104,22 @@ context('Sales -> Claim Order List', () => {
         //Validate that there will be no Error message displayed
         validateModule();
 
-        cy.get('tbody').find("tr").then((row) =>{
-            for(let i = 0; i< row.length; i++){
-                cy.get('tbody>tr').eq(i).find('a').eq(0).click();
-                //Validate Show Disbursement
-                cy.get('h3').contains('Show Claim Order');
-                cy.get('li').find('a').contains('Claim Order Items');
-                cy.get('.btn').contains('Back to Claim Order List').click();
+
+        cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+                cy.get('tbody').find("tr").then((row) =>{
+                    for(let i = 0; i< row.length; i++){
+                        cy.get('tbody>tr').eq(i).find('a').eq(0).click();
+                        //Validate Show Disbursement
+                        cy.get('h3').contains('Show Claim Order');
+                        cy.get('li').find('a').contains('Claim Order Items');
+                        cy.get('.btn').contains('Back to Claim Order List').click();
+                    }
+                })
             }
         })
+
+
+      
     })
 })

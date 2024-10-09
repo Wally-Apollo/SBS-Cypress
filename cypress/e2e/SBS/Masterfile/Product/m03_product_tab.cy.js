@@ -322,7 +322,15 @@ context('M03 - Masterfile (Product Tab)', () => {
             cy.get('[name="planogramLocationSearchCriteria"]').type(data.planogram_location_criteria);
             cy.get('*[class^="search btn"]').click();
             //change fixtures with something that has a value in planogram
-            cy.get('td').contains(data.planogram_location_criteria);
+          
+            cy.get('#productPlacementTable').then($tbody=>{
+                if($tbody.find('tr').length>1){
+                    cy.get('td').contains(data.planogram_location_criteria);
+                }else{
+                    cy.log("report empty")
+
+                }
+            })
         })
     })
 

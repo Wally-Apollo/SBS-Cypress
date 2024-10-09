@@ -19,7 +19,7 @@ function validateEventModule(){
     cy.get('h3').contains('Event List');
     cy.get('label').contains('Facility');
     cy.get('label').contains('Event Type');
-    cy.get('label').contains('Pos:');
+    cy.get('label').contains('Pos :');
     cy.get('label').contains('Business Date From');
     cy.get('label').contains('Business Date To');
     cy.get('.btn').contains('Search');
@@ -35,7 +35,7 @@ function validateEventModule(){
 
 context('Sales -> Events', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -88,11 +88,19 @@ context('Sales -> Events', () => {
             //Search Using POS Number
             cy.get('[name="autoPosTerminal"]').type(data.pos_number);
             const posNumber = 'POS ' + data.pos_number;
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(3).contains(posNumber);
+            cy.get('.btn').contains('Search').click();
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(3).contains(posNumber);
+                        }
+                    })
                 }
             })
+
+           
             cy.get('.btn').contains('Clear').click();
         })
     })

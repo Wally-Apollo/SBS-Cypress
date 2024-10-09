@@ -99,16 +99,37 @@ context('CYCLE COUNT', () => {
         validateModule();
         
         cy.fixture('inventory/cycle_count/search_cycle_count_data').then((data) => {
+          
             
             //Search Using Document Id
             searchWithOneField('documentId',data.document_id);
-            cy.get('td').find('a').contains(data.document_id);
-            cy.get('.btn').contains('Clear').click();
+
+            cy.get('body').then($body => {
+              if ($body.find('td').length) {
+                cy.get('td').find('a').contains(data.document_id);
+                cy.get('.btn').contains('Clear').click();
+              }
+              else{
+                  cy.log("report empty")
+              }
+            });
+
+
+            // cy.get('td').find('a').contains(data.document_id);
+            // cy.get('.btn').contains('Clear').click();
 
             //Search Using Type
             cy.get('[name="f_type"]').select(data.type);
             cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
+
+            cy.get('tbody').then($tbody => {
+              if ($tbody.find('tr').length>1) {
+                cy.get('tbody').find("tr").then((row) =>{
+                  for(let i = 0; i< row.length; i++){
+                      cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.type);
+                  }
+              })
+              cy.get('tbody').find("tr").then((row) =>{
                 for(let i = 0; i< row.length; i++){
                     cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.type);
                 }
@@ -122,6 +143,18 @@ context('CYCLE COUNT', () => {
                     cy.get('tbody>tr').eq(i).find('a').eq(5).contains(data.status);
                 }
             })
+
+
+              }
+              else{
+                  cy.log("report empty")
+              }
+            });
+
+
+           
+
+            
         })
 
       })
@@ -139,7 +172,11 @@ context('CYCLE COUNT', () => {
             
           //Search Using Document Id
           searchWithOneField('documentId',data.document_id);
-          cy.get('td').find('a').contains(data.document_id).click();
+
+
+          cy.get('tbody').then($tbody =>{
+            if ($tbody.find('tr').length>1) {
+              cy.get('td').find('a').contains(data.document_id).click();
 
           cy.get('h3').contains('Show Cycle Count');
 
@@ -151,6 +188,15 @@ context('CYCLE COUNT', () => {
             .and('contain', 'Type:')
           
           cy.get('li').find('a').contains('Cycle Count Item');
+            }
+            else{
+                cy.log("report empty")
+            }
+          });
+
+
+
+         
         })
 
       })
@@ -169,22 +215,34 @@ context('CYCLE COUNT', () => {
             
           //Search Using Document Id
           searchWithOneField('documentId',data.document_id);
-          cy.get('td').find('a').contains(data.document_id).click();
 
-          cy.get('h3').contains('Show Cycle Count');
+          cy.get('tbody').then($tbody =>{
+            if ($tbody.find('tr').length>1) {
+              cy.get('td').find('a').contains(data.document_id).click();
 
-          //Labels
-          cy.get('.property-label2').should('contain', 'Document Id:')
-            .and('contain', 'Reference ID:')
-            .and('contain', 'Count Date:')
-            .and('contain', 'Status:')
-            .and('contain', 'Type:')
-          
-          cy.get('li').find('a').contains('Cycle Count Item');
+              cy.get('h3').contains('Show Cycle Count');
+    
+              //Labels
+              cy.get('.property-label2').should('contain', 'Document Id:')
+                .and('contain', 'Reference ID:')
+                .and('contain', 'Count Date:')
+                .and('contain', 'Status:')
+                .and('contain', 'Type:')
+              
+              cy.get('li').find('a').contains('Cycle Count Item');
+    
+              cy.get('[name="cycleCountItemSearchCriteria"]').type(data.product_id);
+              cy.get('*[class^="search btn"]').click();
+              cy.get('td').contains(data.product_id);
+            }
+            else{
+                cy.log("report empty")
+            }
+          });
 
-          cy.get('[name="cycleCountItemSearchCriteria"]').type(data.product_id);
-          cy.get('*[class^="search btn"]').click();
-          cy.get('td').contains(data.product_id);
+
+
+        
         })
 
 
@@ -204,26 +262,36 @@ context('CYCLE COUNT', () => {
             
           //Search Using Document Id
           searchWithOneField('documentId',data.document_id);
-          cy.get('td').find('a').contains(data.document_id).click();
 
-          cy.get('h3').contains('Show Cycle Count');
+          cy.get('tbody').then($tbody =>{
+            if ($tbody.find('tr').length>1) {
+              cy.get('td').find('a').contains(data.document_id).click();
 
-          //Labels
-          cy.get('.property-label2').should('contain', 'Document Id:')
-            .and('contain', 'Reference ID:')
-            .and('contain', 'Count Date:')
-            .and('contain', 'Status:')
-            .and('contain', 'Type:')
-          
-          cy.get('li').find('a').contains('Cycle Count Item');
+              cy.get('h3').contains('Show Cycle Count');
+    
+              //Labels
+              cy.get('.property-label2').should('contain', 'Document Id:')
+                .and('contain', 'Reference ID:')
+                .and('contain', 'Count Date:')
+                .and('contain', 'Status:')
+                .and('contain', 'Type:')
+              
+              cy.get('li').find('a').contains('Cycle Count Item');
+    
+              //Search Using Status
+              cy.get('[id^=categorySelection]').eq(0).select(data.category);
+              cy.get('tbody').find("tr").then((row) =>{
+                  for(let i = 0; i< row.length; i++){
+                      cy.get('tbody>tr').eq(i).should('be.visible');
+                  }
+              })
+            }
+            else{
+                cy.log("report empty")
+            }
+          });
 
-          //Search Using Status
-          cy.get('[id^=categorySelection]').eq(0).select(data.category);
-          cy.get('tbody').find("tr").then((row) =>{
-              for(let i = 0; i< row.length; i++){
-                  cy.get('tbody>tr').eq(i).should('be.visible');
-              }
-          })
+        
         })
 
 

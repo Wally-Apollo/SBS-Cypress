@@ -35,7 +35,7 @@ function validateShiftWorksheetModule(){
 
 context('Sales -> Shift Worksheet', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -79,31 +79,63 @@ context('Sales -> Shift Worksheet', () => {
             
             //Search Using POS Number
             cy.get('[name="autoPosTerminal"]').type(data.pos_number);
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(1).contains(data.pos_number);
+            cy.get('.btn').contains('Search').click();
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(1).contains(data.pos_number);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+           
             cy.get('.btn').contains('Clear').click();
 
             //Search Using shift number
             cy.get('[id^=shift]').select(data.shift_number);
             cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.shift_number);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.shift_number);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+
+         
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Status
             cy.get('[id^=f_status]').select(data.status);
             cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(4).contains(data.status);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(4).contains(data.status);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+
+           
         })
     })
 

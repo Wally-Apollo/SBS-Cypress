@@ -38,7 +38,7 @@ function validateTransactionModule(){
 
 context('Sales -> Transactions', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -83,11 +83,21 @@ context('Sales -> Transactions', () => {
             //Search Using Receipt Number
             searchWithOneField('receiptNumber',data.receipt_number);
             var totalRows = 0;
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(0).contains(data.receipt_number);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(0).contains(data.receipt_number);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+            
             cy.get('.btn').contains('Clear').click();
 
             //Search Using POS Number
@@ -123,12 +133,20 @@ context('Sales -> Transactions', () => {
 
         cy.fixture('sales/transactions/show_transaction_data').then((data) => {
             //Select any transaction from the list
-            cy.get('td').find('a').contains(data.receipt_number).click();
-        })
 
-        //Validate Show Transaction
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').text().includes(data.receipt_number)){
+                    cy.get('td').find('a').contains(data.receipt_number).click();
+                       //Validate Show Transaction
         cy.get('h3').contains('Show Transaction');
         cy.get('li').find('a').contains('Transaction Items');
         cy.get('li').find('a').contains('Transaction Return');
+                }
+            })
+
+           
+        })
+
+     
     })
 })

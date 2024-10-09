@@ -33,7 +33,7 @@ function validateModule(){
 
 context('Sales -> Cash Add', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -78,21 +78,44 @@ context('Sales -> Cash Add', () => {
             cy.get('[name="f_pos"]').type(data.pos_number);
             cy.get('.btn').contains('Search').click();
             const posNumber = 'POS ' + data.pos_number;
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(1).contains(posNumber);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(1).contains(posNumber);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+
+           
             cy.get('.btn').contains('Clear').click();      
 
             //Search Using Status
             cy.get('[id^=shiftNo]').select(data.shift);
             cy.get('.btn').contains('Search').click();
-            cy.get('tbody').find("tr").then((row) =>{
-                for(let i = 0; i< row.length; i++){
-                    cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.shift);
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('tbody').find("tr").then((row) =>{
+                        for(let i = 0; i< row.length; i++){
+                            cy.get('tbody>tr').eq(i).find('a').eq(2).contains(data.shift);
+                        }
+                    })
+                }else{
+                    cy.get('.message').contains('Result not found.')
                 }
             })
+
+
+
+           
         })
     })
 

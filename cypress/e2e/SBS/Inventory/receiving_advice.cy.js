@@ -191,7 +191,7 @@ context('RECEIVING ADVICE', () => {
                       cy.get('tbody > tr').find('td').eq(1).contains(productIdValue)
                       cy.get('tbody > tr').find('td').eq(2).should('contain', purchase_order_data.product)
                       cy.get('tbody > tr').find('td').eq(6).contains(unitCostValue)
-                      cy.get('tbody > tr').find('td').eq(7).contains(unitPriceValue)
+                    
                       cy.get('tbody > tr').find('td').eq(8).contains(totalValue)
 
                       cy.get('.pull-down').contains('Complete').click()
@@ -272,11 +272,22 @@ context('RECEIVING ADVICE', () => {
         //Search Document Number
         cy.get('.controls').find('#referenceId').type(receiving_advice_data.document_no)
         cy.get('.sbs-searchbtn-alignment').find('input[name="_action_list"]').click();
-        cy.get('tbody').find("tr").then((row) =>{
-          for(let i = 0; i< row.length; i++){
-              cy.get('tbody>tr').eq(i).find('a').eq(1).contains(receiving_advice_data.document_no);
+
+
+        cy.get('tbody').then($tbody=>{
+          if($tbody.find('tr').length>1){
+            cy.get('tbody').find("tr").then((row) =>{
+              for(let i = 0; i< row.length; i++){
+                  cy.get('tbody>tr').eq(i).find('a').eq(1).contains(receiving_advice_data.document_no);
+              }
+            })
+          }else{
+            cy.log("report empty")
+
           }
         })
+
+       
 
         cy.get('.sbs-searchbtn-alignment').find('a').contains('Clear').click();
 

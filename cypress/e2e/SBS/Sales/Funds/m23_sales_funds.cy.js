@@ -118,7 +118,7 @@ context('Sales -> Funds', () => {
         navigateToModule('Sales');
         navigateToSubModule('Funds');
         validateModule();
-        const generatedRandomString = generateRandomString(7)
+        const generatedRandomString = generateRandomString(9)
 
         cy.get('.pull-right > .btn').click()
         cy.get('#referenceId').type(generatedRandomString)
@@ -159,7 +159,7 @@ context('Sales -> Funds', () => {
         cy.wait(1000)
         cy.get('.btn').contains('Print').click();
         cy.wait(1000)
-        cy.get('.btn').contains('Approved').click();
+        cy.get('.btn').contains('Approve').click();
         cy.wait(1000)
         cy.get('.nav-buttons > .btn').click()
     })

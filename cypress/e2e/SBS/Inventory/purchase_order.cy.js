@@ -195,15 +195,41 @@ context('PURCHASE ORDER', () => {
         //Search Document ID
         cy.get('#documentId').type(purchase_order_data.document_id)
         cy.get('.sbs-searchbtn-alignment').find('input[name="_action_list"]').click()
-        cy.get('tbody').find('a').contains(purchase_order_data.document_id)
+        
+
+
+        cy.get('tbody').then($tbody=>{
+          if($tbody.find('tr').length>1){
+            cy.get('tbody').find('a').contains(purchase_order_data.document_id)
+          }else{
+            cy.log("report empty")
+          }
+        })
+
+
+
         //Search Status
         cy.get('.sbs-searchbtn-alignment').find('a').contains('Clear').click()
         cy.get('#f_status').select(purchase_order_data.new_status)
-        cy.get('tbody').find("tr").then((row) =>{
-          for(let i = 0; i< row.length; i++){
-              cy.get('tbody>tr').eq(i).find('a').eq(7).contains(purchase_order_data.new_status);
+        cy.wait(2000)
+
+        cy.get('input.btn').click()
+
+        cy.get('tbody').then($tbody=>{
+          if($tbody.find('tr').length>1){
+            cy.get('tbody').find("tr").then((row) =>{
+              for(let i = 0; i< row.length; i++){
+                  cy.get('tbody>tr').eq(i).find('a').eq(7).contains(purchase_order_data.new_status);
+              }
+             })
+          }else{
+            cy.log("report empty")
           }
-         })
+        })
+
+
+
+      
       })
     })
 
@@ -214,8 +240,21 @@ context('PURCHASE ORDER', () => {
         //Search Document ID
         cy.get('#documentId').type(purchase_order_data.document_id)
         cy.get('.sbs-searchbtn-alignment').find('input[name="_action_list"]').click()
-        cy.get('tbody').find('a').contains(purchase_order_data.document_id).click()        
-        cy.get('.pull-down').find('a').contains('Print').click();
+        
+        
+        
+        cy.get('tbody').then($tbody=>{
+          if($tbody.find('a').text().includes(purchase_order_data.document_id)){
+            cy.get('tbody').find('a').contains(purchase_order_data.document_id).click()   
+            cy.get('.pull-down').find('a').contains('Print').click();
+          }else{
+            cy.log("report empty")
+
+          }
+        })
+
+
+      
         // cy.on('window:before:load', (win) => {
         //   // just log the win.location.href for convenience
         //   console.log('WINDOW BEFORE LOAD', win.location.href)

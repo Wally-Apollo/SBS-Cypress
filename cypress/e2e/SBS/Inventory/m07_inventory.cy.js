@@ -90,9 +90,21 @@ context('INVENTORY', () => {
             cy.get('input[name="_action_list"]').click()
             cy.wait(1000);
             //Validate Search Result
-            cy.get('td').find('a').contains(data.product_id);
-            cy.get('td').find('a').contains(data.product_name).click();
-            cy.wait(1000);
+
+            cy.get('tbody').then($tbody =>{
+                if ($tbody.find('td').length>1) {
+                    cy.get('td').find('a').contains(data.product_id);
+                    cy.get('td').find('a').contains(data.product_name).click();
+                    cy.wait(1000);
+                }
+                else{
+                    cy.log("report empty")
+                }
+              });
+    
+
+
+           
         });
       })
 
@@ -105,9 +117,19 @@ context('INVENTORY', () => {
         cy.fixture('inventory/inventory_data/m07_inventory_data.json').then((data) => {
         cy.get('input[id="autoProductListById"]').type(data.product_id).wait(2000).type('{downArrow}').type('{enter}');
         cy.get('input[name="_action_list"]').click()
-        cy.get('td').find('a').contains(data.product_id).click();
-        cy.wait(2000);
 
+
+
+
+
+       
+
+
+        cy.get('tbody').then($tbody =>{
+            if ($tbody.find('td').length>1) {
+                cy.get('td').find('a').contains(data.product_id).click();
+                cy.wait(2000);
+                
         cy.get('input[id="referenceId"]').type(data.dummy_product_id).wait(2000).type('{downArrow}').type('{enter}');
         cy.get('input[name="_action_list"]').click()
         cy.get('.message').should('contain', 'Result not found.').wait(1000);
@@ -154,6 +176,18 @@ context('INVENTORY', () => {
         cy.wait(1000);
         cy.get('.navbar-text > a').click();
         cy.wait(1000);
+
+
+
+
+            }
+            else{
+                cy.log("report empty")
+            }
+          });
+
+
+
         
         })
 

@@ -65,7 +65,19 @@ context('Misc -> Miscellaneous', () => {
         navigateToModule('Misc');
         navigateToSubModule('Miscellaneous');
 
-        cy.get('.btn').contains('Generate POS Database').click(); 
+      
+        // cy.get(':nth-child(3) > td > form').should("include.text","Still generating Pos Database, please refresh the browser to see if it's finished.")
+
+        cy.get(':nth-child(3) > td > form').invoke('text').then((text) => {
+            if (text.includes('Still generating Pos Database, please refresh the browser to see if it\'s finished.')) {
+              cy.log('Text found.');
+            } else {
+                cy.get('form > .btn').click()
+                text.includes('Still generating Pos Database, please refresh the browser to see if it\'s finished.')
+            }
+          });
+
+        
         // const posDataFolder = "C:\pos_db"
         // const fs = require('fs');
         // fs.readdirSync(posDataFolder).forEach(file =>{

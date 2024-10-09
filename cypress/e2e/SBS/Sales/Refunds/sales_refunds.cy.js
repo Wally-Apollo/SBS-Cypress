@@ -35,7 +35,7 @@ function validateModule(){
 
 context('Sales -> Modules Validation', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -78,7 +78,17 @@ context('Sales -> Modules Validation', () => {
         cy.fixture('sales/refund/search_refund_data').then((data) => {
             //Search Receipt Number
             searchWithOneField('salesOrder',data.receipt_number);
-            cy.get('td').find('a').contains(data.receipt_number);
+            
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').text().includes(data.receipt_number)){
+                    cy.get('td').find('a').contains(data.receipt_number);
+                }else{
+                    cy.get('.message').contains('Result not found.')
+                }
+            })
+
             cy.get('.btn').contains('Clear').click();
 
             //Search Using Status

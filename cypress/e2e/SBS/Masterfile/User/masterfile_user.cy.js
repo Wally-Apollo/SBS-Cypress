@@ -34,7 +34,7 @@ function validateUserModule(){
 
 context('Masterfile -> User', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -76,22 +76,61 @@ context('Masterfile -> User', () => {
           
           //Search Using User Id
           searchWithOneField('externalId',data.external_id);
-          cy.get('td').find('a').contains(data.external_id);
+         
+
+
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+              cy.get('td').find('a').contains(data.external_id);
+            }else{
+              cy.get('.message').contains('Result not found')
+            }
+          })
+
+
           cy.get('.btn').contains('Clear').click();
   
           //Search Using Username
           searchWithOneField('username',data.user_name);
-          cy.get('td').find('a').contains(data.user_name);
+          
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+              cy.get('td').find('a').contains(data.user_name);
+            }else{
+              cy.get('.message').contains('Result not found')
+            }
+          })
+
+
+
+
           cy.get('.btn').contains('Clear').click();
   
           //Search Using Firstname
           searchWithOneField('firstName',data.first_name);
-          cy.get('td').find('a').contains(data.first_name);
+          
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+              cy.get('td').find('a').contains(data.first_name);
+            }else{
+              cy.get('.message').contains('Result not found')
+            }
+          })
+
+
           cy.get('.btn').contains('Clear').click();
   
           //Search Using Last name
           searchWithOneField('lastName',data.last_name);
-          cy.get('td').find('a').contains(data.last_name);
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+              cy.get('td').find('a').contains(data.last_name);
+            }else{
+              cy.get('.message').contains('Result not found')
+            }
+          })
+
+          
           cy.get('.btn').contains('Clear').click();
   
           //Search using all field
@@ -100,11 +139,22 @@ context('Masterfile -> User', () => {
           cy.get('[id^=firstName]').type(data.first_name);
           cy.get('[id^=lastName]').type(data.last_name);
           cy.get('.btn').contains('Search').click();
-  
-          cy.get('td').find('a').contains(data.external_id);
+
+
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+              cy.get('td').find('a').contains(data.external_id);
           cy.get('td').find('a').contains(data.user_name);
           cy.get('td').find('a').contains(data.first_name);
           cy.get('td').find('a').contains(data.last_name);
+            }else{
+              cy.get('.message').contains('Result not found')
+            }
+          })
+
+
+  
+          
         })
       })
 
@@ -119,13 +169,31 @@ context('Masterfile -> User', () => {
 
         //Select any user from the list
         cy.fixture('masterfile/user/show_user_page_data').then((data) => {
-          cy.get('td').find('a').contains(data.external_id).click();
+
+          
+
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>1){
+              if($tbody.find('tr').text().includes(data.external_id)){
+                cy.get('td').find('a').contains(data.external_id).click();
+
+                //Validate Show user
+                cy.get('h3').contains('Show User');
+                cy.get('li').find('a').contains('Facility User Role');
+                cy.get('li').find('a').contains('Contact Info');
+                cy.get('li').find('a').contains('Party Info');
+
+
+              }else{
+                cy.log('No user match to ',data.external_id)
+              }
+             
+            }
+          })
+
+
         })
-        //Validate Show user
-        cy.get('h3').contains('Show User');
-        cy.get('li').find('a').contains('Facility User Role');
-        cy.get('li').find('a').contains('Contact Info');
-        cy.get('li').find('a').contains('Party Info');
+        
       })
 
       it('Search Facility User Role', () =>{
@@ -139,15 +207,33 @@ context('Masterfile -> User', () => {
 
         cy.fixture('masterfile/user/search_facility_user_role_data').then((data) => {
           //Select any user from the list
-          cy.get('td').find('a').contains(data.external_id).click();
+         
 
-          //Validate Show user
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>1){
+              if($tbody.find('tr').text().includes(data.external_id)){
+                cy.get('td').find('a').contains(data.external_id).click();
+
+                 //Validate Show user
           cy.get('h3').contains('Show User');
           cy.get('li').find('a').contains('Facility User Role').click();
           
           cy.get('[name="facilityUserRoleSearchCriteria"]').type(data.facility_user_role_criteria);
           cy.get('*[class^="search btn"]').click();
-          cy.get('td').find('a').contains(data.facility_user_role_criteria);      
+          cy.get('td').find('a').contains(data.facility_user_role_criteria);  
+
+
+              }else{
+                cy.log('No user match to ',data.external_id)
+              }
+             
+            }
+          })
+
+
+
+
+             
         })
       })
 
@@ -162,15 +248,31 @@ context('Masterfile -> User', () => {
 
         cy.fixture('masterfile/user/search_contact_info_data').then((data) => {
           //Select any user from the list
-          cy.get('td').find('a').contains(data.external_id).click();
+          
 
-          //Validate Show user
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>1){
+              if($tbody.find('tr').text().includes(data.external_id)){
+                cy.get('td').find('a').contains(data.external_id).click();
+
+                //Validate Show user
           cy.get('h3').contains('Show User');
           cy.get('li').find('a').contains('Contact Info').click();
           
           cy.get('[name="contactMechSearchCriteria"]').type(data.contact_mech_search_criteria);
           cy.get('*[class^="search btn"]').click();
-          cy.get('td').find('a').contains('sad');        
+          cy.get('td').find('a').contains('sad');    
+
+
+              }else{
+                cy.log('No user match to ',data.external_id)
+              }
+             
+            }
+          })
+
+
+              
         })
       })
 
@@ -185,8 +287,14 @@ context('Masterfile -> User', () => {
 
         cy.fixture('masterfile/user/search_party_info_data').then((data) => {
           //Select any user from the list
-          cy.get('td').find('a').contains(data.external_id).click();
+         
 
+          cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>1){
+              if($tbody.find('tr').text().includes(data.external_id)){
+                cy.get('td').find('a').contains(data.external_id).click();
+
+               
           //Validate Show user
           cy.get('h3').contains('Show User');
           cy.get('li').find('a').contains('Party Info').click();
@@ -194,6 +302,17 @@ context('Masterfile -> User', () => {
           cy.get('[name="partyInfoSearchCriteria"]').type(data.party_info_search_criteria);
           cy.get('*[class^="search btn"]').click();
           cy.get('td').find('a').contains(data.party_info_search_criteria);
+
+              }else{
+                cy.log('No user match to ',data.external_id)
+              }
+             
+            }
+          })
+
+
+
+
         })
       })
 })

@@ -126,15 +126,35 @@ context('Sales -> Modules Validation', () => {
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('.btn').contains('Save').click();
-            cy.get('.btn').contains('<< Back to').click(); 
+
+            cy.get('body').then($body=>{
+                if($body.find('.alert').length>0){
+                    cy.get('.btn').contains('Cancel').click();
+                }else{
+                    cy.get('.btn').contains('<< Back to').click(); 
+                }
+            })
+
+
+           
 
             cy.get('.pull-right > .btn').click()
             cy.get('#businessDate').click()
             cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
             cy.get('.btn').contains('Save').click();
+
+            cy.get('body').then($body=>{
+                if($body.find('.alert').length>0){
+                    cy.get('.btn').contains('Cancel').click();
+                }else{
+                    cy.get('.btn').contains('<< Back to').click(); 
+                }
+            })
+
+
             // cy.get('.btn').contains('Edit').click();
             // cy.get('.btn').contains('Save').click();
-            cy.get('.btn').contains('<< Back to').click(); 
+            
         })
 
     })

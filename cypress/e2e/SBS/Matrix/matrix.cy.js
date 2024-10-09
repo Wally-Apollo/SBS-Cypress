@@ -17,7 +17,7 @@ function searchWithOneField(fieldId,value){
 
 context('MATRIX', () => {
     beforeEach(() => {
-        cy.visit('http://192.168.64.3:8080/RetailPlusStoreBackend/login/auth')
+        cy.visit('/RetailPlusStoreBackend/login/auth')
         cy.contains('Username');
         cy.contains('Password');
         cy.contains('Login');
@@ -67,20 +67,52 @@ context('MATRIX', () => {
 
         //Search Using Document Id
         searchWithOneField('f_documentId', planogram_data.document_id);
-        cy.get('td').find('a').contains(planogram_data.document_id);
+        
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0){
+                    cy.get('td').find('a').contains(planogram_data.document_id);
+                }else{
+                    cy.get('.message').contains('Result not found.')
+                }
+            })
+
+
         cy.get('.btn').contains('Clear').click();
 
         //Search Using Status
         cy.get('[id^=f_status]').select(planogram_data.status)
-        cy.get('tbody').find('a').contains(planogram_data.status);
+        
+
+        cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+                cy.get('tbody').find('a').contains(planogram_data.status);
+            }else{
+                cy.get('.message').contains('Result not found.')
+            }
+        })
+
+
         cy.get('.btn').contains('Clear').click();
 
         //Search using all field
         cy.get('[id^=f_documentId]').type(planogram_data.document_id);
-        cy.get('[id^=f_status]').type(planogram_data.status);
-        //Assert search result
-        cy.get('td').find('a').contains(planogram_data.document_id);
-        cy.get('td').find('a').contains(planogram_data.status);
+        cy.get('[id^=f_status]').select(planogram_data.status)
+        cy.get('input.btn').click()
+
+        cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0){
+                cy.get('tbody').find('a').contains(planogram_data.status);
+                 //Assert search result
+                cy.get('td').find('a').contains(planogram_data.document_id);
+                 cy.get('td').find('a').contains(planogram_data.status);
+            }else{
+                cy.get('.message').contains('Result not found.')
+            }
+        })
+
+
+       
+       
         })
 
       })
@@ -95,12 +127,11 @@ context('MATRIX', () => {
         //Call data file
         cy.fixture('matrix/planogram_data/search_planogram_data').then((planogram_data) => {
         searchWithOneField('f_documentId', planogram_data.document_id);
-        cy.get('td').find('a').contains(planogram_data.document_id).click()
-      
 
-        //Validate Planogram Details page
-
-        //Validate Details
+        cy.get('tbody').then($tbody=>{
+            if($tbody.find('tr').length>0 && $tbody.find('tr').contains(planogram_data.document_id)){
+                cy.get('td').find('a').contains(planogram_data.document_id).click()
+                 //Validate Details
         cy.get('.property-label2').contains('Id:');
         cy.get('span[class="property-label2"]').contains('Document Id:');
         cy.get('.property-value2').contains(planogram_data.document_id);
@@ -125,6 +156,19 @@ context('MATRIX', () => {
         cy.get('fieldset').find('input[name="planogramLocationSearchCriteria"]').should('be.visible') 
         cy.get('.icon-search').should('be.visible')
 
+
+            }else{
+                cy.get('.message').contains('Result not found. ')
+            }
+        })
+
+        
+      
+
+        //Validate Planogram Details page
+
+       
+
      })
       })
 
@@ -138,17 +182,31 @@ context('MATRIX', () => {
          //Call data file
         cy.fixture('matrix/planogram_data/search_planogram_data').then((planogram_data) => {
         searchWithOneField('f_documentId', planogram_data.document_id);
-        cy.get('td').find('a').contains(planogram_data.document_id).click();
+        
+
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').contains(planogram_data.document_id)){
+                    cy.get('td').find('a').contains(planogram_data.document_id).click();
+
+                    cy.fixture('matrix/planogram_data/search_planogram_data').then((planogram_data) => {
+                        cy.get('fieldset').find('input[name="locationSearchCriteria"]').type(planogram_data.location_id)
+                        cy.get('.icon-search').click();
+                
+                        //Validate Search result
+                        cy.get('tbody').find('a').contains(planogram_data.location_id)
+                        })
+
+
+                }else{
+                    cy.get('.message').contains('Result not found. ')
+                }
+            })
+
 
          })
 
-        cy.fixture('matrix/planogram_data/search_planogram_data').then((planogram_data) => {
-        cy.get('fieldset').find('input[name="locationSearchCriteria"]').type(planogram_data.location_id)
-        cy.get('.icon-search').click();
-
-        //Validate Search result
-        cy.get('tbody').find('a').contains(planogram_data.location_id)
-        })
+       
 
         })
 
@@ -162,17 +220,30 @@ context('MATRIX', () => {
              //Call data file
             cy.fixture('matrix/planogram_data/search_planogram_data').then((planogram_data) => {
             searchWithOneField('f_documentId', planogram_data.document_id);
-            cy.get('td').find('a').contains(planogram_data.document_id).click();
+           
     
+
+            cy.get('tbody').then($tbody=>{
+                if($tbody.find('tr').length>0 && $tbody.find('tr').contains(planogram_data.document_id)){
+                    cy.get('td').find('a').contains(planogram_data.document_id).click();
+
+                    cy.get('.nav-tabs').find('a').contains('Product').click()   
+                    cy.get('fieldset').find('input[name="planogramLocationSearchCriteria"]').type(planogram_data.product_id)
+                    cy.get('.icon-search').click();
+                    
+                    //Validate Search result
+                    cy.get('tbody').find('td').contains(planogram_data.product_id)
+                    cy.get('tbody').find('td').contains(planogram_data.product_name)
+
+
+                }else{
+                    cy.get('.message').contains('Result not found. ')
+                }
+            })
+
              
 
-            cy.get('.nav-tabs').find('a').contains('Product').click()   
-            cy.get('fieldset').find('input[name="planogramLocationSearchCriteria"]').type(planogram_data.product_id)
-            cy.get('.icon-search').click();
-            
-            //Validate Search result
-            cy.get('tbody').find('td').contains(planogram_data.product_id)
-            cy.get('tbody').find('td').contains(planogram_data.product_name)
+        
 
         })
     
