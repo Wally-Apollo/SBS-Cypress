@@ -2,7 +2,7 @@
 
 //Common Functions
 function navigateToModule(module){
-    cy.get('ul').contains(module).click();
+    cy.get('[data-cy="left-drawer"]').contains(module).click();
 }
 
 function navigateToSubModule(subModule){
