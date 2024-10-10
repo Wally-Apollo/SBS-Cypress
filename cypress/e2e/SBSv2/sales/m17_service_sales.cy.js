@@ -15,6 +15,10 @@ function navigateToModule(module) {
   
   function validateModule() {
     cy.get('[data-cy="title"]').contains('Service Sales List');
+    cy.get('[data-cy="facility-input"]').should('exist').should('be.visible');
+    cy.get('[data-cy="status-select"]').should('exist').should('be.visible');
+    cy.get('[data-cy="from-date-input"]').should('exist').should('be.visible');
+    cy.get('[data-cy="to-date-input"]').should('exist').should('be.visible');
     cy.get('[data-cy="search-btn"]').contains('Search');
     cy.get('[data-cy="clear-btn"]').contains('Clear');
   
