@@ -1,22 +1,22 @@
 [
     {
-        "documentId": "1"
+        "document-number-input": "1"
     },
     {
         "data": [ 
             {
-                "f_status": "Created"
+                "status-select": "Created"
             },
             {
-                "f_status": "Approved"
+                "status-select": "Approved"
             },
             {
-                "f_status": "Cancelled"
+                "status-select": "Cancelled"
             }
         ]
     },
     {
-        "referenceId": "test",
+        "reference": "test",
         "amount": "100",
         "vat": "Vatable"
     }
