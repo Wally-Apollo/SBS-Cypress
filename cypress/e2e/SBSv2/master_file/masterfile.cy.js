@@ -4,6 +4,15 @@ context("Master File Test Case", () => {
     loginCreddentials();
     NabVarVerify();
   });
+  afterEach(() => {
+    cy.get('[data-cy="left-drawer"]').trigger("mouseover");
+    cy.get('[data-cy="nav-links"]')
+      .find("div")
+      .contains("Logout")
+      .parent()
+      .click();
+    cy.get('[data-autofocus="true"]').click();
+  });
 
   function NabVarVerify() {
     cy.get('[data-cy="left-drawer"]').trigger("mouseover");
@@ -83,6 +92,25 @@ context("Master File Test Case", () => {
       "contains.text",
       "Last Updated"
     );
+
+    cy.get('[data-cy="user-list-table"]')
+      .find("table > tbody")
+      .then(($tbody) => {
+        if ($tbody.find("td").length > 0) {
+          cy.get(
+            ':nth-child(1) > :nth-child(1) > a > [data-cy="user-row"]'
+          ).click();
+
+          cy.get(".q-toolbar__title").should("contains.text", "Show User");
+
+          cy.get("a > .q-btn").click();
+        } else {
+          cy.get(".q-table__bottom").should(
+            "contains.text",
+            "No data available"
+          );
+        }
+      });
   });
   it("Product Navigation", () => {
     navigateNavBar("MasterFile", "Product");
@@ -103,8 +131,26 @@ context("Master File Test Case", () => {
       "contains.text",
       "Discontinuation Date"
     );
+
+    cy.get('[data-cy="product-table"]')
+      .find("table > tbody")
+      .then(($tbody) => {
+        if ($tbody.find("td").length > 0) {
+          cy.get(
+            ':nth-child(1) > :nth-child(1) > [data-cy="table-row-link"] > [data-cy="table-cell-text"]'
+          ).click();
+
+          cy.get(".q-toolbar__title").should("contains.text", "Show Product");
+          cy.get("a > .q-btn").click();
+        } else {
+          cy.get(".q-table__bottom").should(
+            "contains.text",
+            "No data available"
+          );
+        }
+      });
   });
-  it.only("Promo Navigation", () => {
+  it("Promo Navigation", () => {
     navigateNavBar("MasterFile", "promo");
     cy.get('[data-cy="promo-toolbar-title"]').should("contain", "Promo List");
 
@@ -118,5 +164,66 @@ context("Master File Test Case", () => {
     );
     cy.get('[data-cy="promo-table"]').should("contains.text", "Updated By");
     cy.get('[data-cy="promo-table"]').should("contains.text", "Last Updated");
+
+    cy.get('[data-cy="promo-table"]')
+      .find("table > tbody")
+      .then(($tbody) => {
+        if ($tbody.find("td").length > 0) {
+          cy.get(
+            ':nth-child(1) > :nth-child(1) > [data-cy="promo-table-row-link"] > [data-cy="promo-table-cell-text"]'
+          ).click();
+
+          cy.get(".q-toolbar__title").should("contains.text", "Show Promo");
+          cy.get("a > .q-btn").click();
+        } else {
+          cy.get(".q-table__bottom").should(
+            "contains.text",
+            "No data available"
+          );
+        }
+      });
+  });
+
+  it("Facility Navigation", () => {
+    navigateNavBar("MasterFile", "facility");
+    cy.get('[data-cy="facility-toolbar-title"]').should(
+      "contain",
+      "Facility List"
+    );
+
+    cy.get('[data-cy="facility-table"]').should("be.visible");
+    cy.get('[data-cy="facility-table"]').should("contains.text", "Facility Id");
+    cy.get('[data-cy="facility-table"]').should("contains.text", "GLN");
+    cy.get('[data-cy="facility-table"]').should(
+      "contains.text",
+      "Facility Name"
+    );
+    cy.get('[data-cy="facility-table"]').should(
+      "contains.text",
+      "Facility Type"
+    );
+    cy.get('[data-cy="facility-table"]').should("contains.text", "Updated By");
+    cy.get('[data-cy="facility-table"]').should(
+      "contains.text",
+      "Last Updated"
+    );
+
+    cy.get('[data-cy="facility-table"]')
+      .find("table > tbody")
+      .then(($tbody) => {
+        if ($tbody.find("td").length > 0) {
+          cy.get(
+            ':nth-child(1) > :nth-child(1) > [data-cy="facility-table-row-link"] > [data-cy="facility-table-cell-text"]'
+          ).click();
+
+          cy.get(".q-toolbar__title").should("contains.text", "Show Facility");
+          cy.get("a > .q-btn").click();
+        } else {
+          cy.get(".q-table__bottom").should(
+            "contains.text",
+            "No data available"
+          );
+        }
+      });
   });
 });

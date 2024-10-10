@@ -32,9 +32,9 @@ Cypress.on("uncaught:exception", (err, runnable) => {
   // You can also log the error to the console for debugging purposes
   console.log(err.message);
 });
-// Cypress.on("command:enqueued", (command) => {
-//   // If the command is not 'wait', add a wait after every other command
-//   if (command.name !== "wait") {
-//     cy.wait(500); // Adjust the wait time (in ms) as needed
-//   }
-// });
+Cypress.on("command:enqueued", (command) => {
+  // If the command is not 'wait', add a wait after every other command
+  if (command.name !== "wait") {
+    cy.wait(500); // Adjust the wait time (in ms) as needed
+  }
+});
