@@ -24,52 +24,43 @@ function searchWithOneField(fieldId,value){
 }
 
 function validateShiftWorksheetModule(){
-    cy.get('h3').contains('Shift Work Sheet List');
-    cy.get('label').contains('Facility');
-    cy.get('label').contains('Pos:');
-    cy.get('label').contains('Shift:');
-    cy.get('label').contains('Business Date From:');
-    cy.get('label').contains('Business Date To:');
-    cy.get('label').contains('Status:');
-    cy.get('.btn').contains('Search');
-    cy.get('.btn').contains('Clear');
-
-    cy.get('.sortable').contains('Business Date');
-    cy.get('.sortable').contains('POS');
-    cy.get('.sortable').contains('Shift');
-    cy.get('.sortable').contains('Cashier');
+    
     cy.get('.sortable').contains('Status');
 
-    cy.get('[data-cy="title"]').contains('Shift Worksheet');
+    cy.get('[data-cy="title"]').contains('Shift Worksheet List');
     cy.get('[data-cy="pos-input"]').should('exist').should('be.visible');
     cy.get('[data-cy="facility-input"]').should('exist').should('be.visible');
-    cy.get('[data-cy="erc-number-input"]').should('exist').should('be.visible');
-   
+    cy.get('[data-cy="shift-select"]').should('exist').should('be.visible');
+    cy.get('[data-cy="status-select"]').should('exist').should('be.visible');
     cy.get('[data-cy="from-date-input"]').should('exist').should('be.visible');
     cy.get('[data-cy="to-date-input"]').should('exist').should('be.visible');
  
     cy.get('[data-cy="search-btn"]').contains('Search');
     cy.get('[data-cy="clear-btn"]').contains('Clear');
   
+    cy.get('[data-cy="shift-worksheet-table"]').contains('Business Date');
     cy.get('[data-cy="shift-worksheet-table"]').contains('POS');
-    cy.get('[data-cy="shift-worksheet-table"]').contains('Facility');
-    cy.get('[data-cy="shift-worksheet-table"]').contains('ERC Number');
-    cy.get('[data-cy="shfit-worksheet-table"]').contains('Total Amount');
-    cy.get('[data-cy="order-table"]').contains('Claim Date');
-    cy.get('[data-cy="order-table"]').contains('Date Created');
+    cy.get('[data-cy="shift-worksheet-table"]').contains('Shift');
+    cy.get('[data-cy="shift-worksheet-table"]').contains('Cashier');
+    cy.get('[data-cy="shift-worksheet-table"]').contains('Status');
+
 }
 
 context('Sales -> Shift Worksheet', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8080/RetailPlusStoreBackend/login/auth')
-        cy.contains('Username');
-        cy.contains('Password');
-        cy.contains('Login');
-        cy.fixture('sbs_credentials/sbs_credentials.json').then((login_data) =>{
-            cy.get('[id^=username]').type(login_data.username);
-            cy.get('[id^=password]').type(login_data.password);
+        cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+            cy.visit(sbs_credentials.url)
+            cy.contains('Username');
+            cy.contains('Password');
+           
+            cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
+                cy.visit(sbs_credentials.url);
+               
+                cy.get('[data-cy="input-username"]').type(sbs_credentials.username);
+                cy.get('[data-cy="input-password"]').type(sbs_credentials.password);
+                cy.get('[data-cy="button-login"]').click();
+            })
         })
-        cy.get('[id^=submit]').click();
     })
 
     it('Validation of Shift Worksheet List page', () => {
@@ -88,45 +79,48 @@ context('Sales -> Shift Worksheet', () => {
         cy.fixture('sales/shift_worksheet/search_shift_worksheet_list_data').then((data) => {
             
             //Search Using POS Number
-             cy.get('#autoPosTerminal').type(data.pos_number);
-             cy.get('.btn').contains('Search').click();
+             cy.get('[data-cy="pos-input"]').type(data.pos_number);
+             cy.get('[data-cy="search-btn"]').contains('Search').click();
              cy.wait(2000)
-             cy.get('.btn').contains('Clear').click();
+             cy.get('[data-cy="clear-btn"]').contains('Clear').click();
 
             //Search Using shift number
             cy.then(() => {
                 for (let i = 1; i < 11; i++) {
-                    cy.get('#shift').select(i);
-                    cy.get('.btn').contains('Search').click();
+                    
+                    cy.get('[data-cy="shift-select"]').click();
+                    cy.get('.q-menu .q-item').contains(i).click();
+                    cy.get('[data-cy="search-btn"]').contains('Search').click();
                     cy.wait(2000)
-                    cy.get('.btn').contains('Clear').click();
+                    cy.get('[data-cy="clear-btn"]').contains('Clear').click();
+       
                 }
               });
 
             //Search using date from
-            cy.get('#businessDateFromSearch').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click()
-            cy.get('.btn').contains('Search').click();
+            cy.get('[data-cy="from-date-input"]').type('20210901');
+            cy.get('[data-cy="search-btn"]').contains('Search').click();
             cy.wait(2000)
-            cy.get('.btn').contains('Clear').click();
+            cy.get('[data-cy="clear-btn"]').contains('Clear').click();
 
             //Search using date to
-            cy.get('#businessDateToSearch').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click()
-            cy.get('.btn').contains('Search').click();
+            cy.get('[data-cy="to-date-input"]').click()
+            cy.get('[data-cy="search-btn"]').contains('Search').click();
             cy.wait(2000)
-            cy.get('.btn').contains('Clear').click();
+            cy.get('[data-cy="clear-btn"]').contains('Clear').click();
 
             //Search Using Status
-            cy.get('[id^=f_status]').select('IN PROCESS');
-            cy.get('.btn').contains('Search').click();
+            cy.get('[data-cy="status-select"]').click();
+            cy.get('.q-menu .q-item').contains('In Process').click();
+            cy.get('[data-cy="search-btn"]').contains('Search').click();
             cy.wait(2000)
-            cy.get('.btn').contains('Clear').click();
+            cy.get('[data-cy="clear-btn"]').contains('Clear').click();
 
-            cy.get('[id^=f_status]').select('APPROVED');
-            cy.get('.btn').contains('Search').click();
+            cy.get('[data-cy="status-select"]').click();
+            cy.get('.q-menu .q-item').contains('Approved').click();
+            cy.get('[data-cy="search-btn"]').contains('Search').click();
             cy.wait(2000)
-            cy.get('.btn').contains('Clear').click();
+            cy.get('[data-cy="clear-btn"]').contains('Clear').click();
         })
     })
 })
