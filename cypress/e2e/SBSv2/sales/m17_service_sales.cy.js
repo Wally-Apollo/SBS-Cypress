@@ -1,4 +1,19 @@
 // Common Functions
+function navigateNavBar(navBarName, subNavBarName) {
+  cy.get('[data-cy="left-drawer"]').trigger("mouseover");
+
+  //dropdown
+  cy.get('[data-cy="nav-links"]')
+    .find("div")
+    .contains(navBarName)
+    .parent()
+    .click();
+
+  cy.get(
+    `[data-cy="link-${subNavBarName.replace(/ /g, "-").toLowerCase()}"]`
+  ).click();
+}
+
 function navigateToModule(module) {
     cy.get('[data-cy="left-drawer"]').trigger('mouseover').contains(module).click();
   }

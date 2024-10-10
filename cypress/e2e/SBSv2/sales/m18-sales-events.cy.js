@@ -1,25 +1,36 @@
+    function navigateNavBar(navBarName, subNavBarName) {
+        cy.get('[data-cy="left-drawer"]').trigger("mouseover");
 
-    function navigateToModule(module) {
-        cy.get('[data-cy="left-drawer"]').trigger('mouseover').contains(module).click();
+        //dropdown
+        cy.get('[data-cy="nav-links"]')
+        .find("div")
+        .contains(navBarName)
+        .parent()
+        .click();
+
+        cy.get(
+        `[data-cy="link-${subNavBarName.replace(/ /g, "-").toLowerCase()}"]`
+        ).click();
     }
     
-    function navigateToSubModule(subModule) {
-        cy.get('[data-cy="nav-links"]').contains(subModule).click();
-    }
-    
+      
     function searchWithOneField(fieldId, value) {
         const field = `[data-cy=${fieldId}]`;
         cy.get(field).click();
+        
         cy.get('.q-menu .q-item').contains(value).click();
         cy.get('[data-cy="search-btn"]').click();
     }
     function searchWithCategory(fieldId,value){
         const field = `[data-cy=${fieldId}]`;
         cy.get(field).click();
+        
         cy.get('.q-menu .q-item').contains(value).click();
         cy.get('[data-cy="search-btn"]').click();
     }
     
+      
+      
     function searchSuccess(data,  category = false) {
         const keys = Object.keys(data); 
         let check;
@@ -113,11 +124,8 @@
     })
     it('Validation of Event List page', () => {
         //Click Sales from the menu
-        navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
-    
+        navigateNavBar('Sales', 'Events');
+        
         //Validate that there will be no Error message displayed
         validateEventModule();
     })
@@ -125,11 +133,7 @@
     it('TC01: S01 - S05', ()=> {
     
     
-         //Click Sales from the menu
-         navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
+        navigateNavBar('Sales', 'Events');
     
         cy.fixture('sales/events/m18-sales-events').then((data) => {
             for (let i =  0; i <  data[0].eventType.length; i++) {
@@ -151,10 +155,7 @@
     
     it('TC02: S01 - S03', ()=> {
          //Click Sales from the menu
-         navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
+         navigateNavBar('Sales', 'Events');
         
     
     
