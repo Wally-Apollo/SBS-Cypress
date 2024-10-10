@@ -1,10 +1,4 @@
 
-
-
-
-//Common Functions
-
-
 //Common Functions
 function navigateNavBar(navBarName, subNavBarName) {
     cy.get('[data-cy="left-drawer"]').trigger("mouseover");
@@ -58,8 +52,8 @@ function navigateNavBar(navBarName, subNavBarName) {
             }).then(()=>{
                 cy.wrap(check).then(value=>{
                     if(value>0){
-                        cy.get('[data-cy="events-table"]').should('have.descendants', 'td');
-                    }else{cy.get('.q-table__bottom').should('contain', 'No data available');}
+                        cy.get('[data-cy="order-table"]').should('have.descendants', 'td');
+                    }
                 })
             })
 
@@ -72,8 +66,7 @@ function searchClear(check = false) {
     cy.get('[data-cy="search-btn"]').contains('Search').click();
     if(check) {
         cy.get('[data-cy="events-table"]').should('have.descendants', 'td');
-    } else {
-        cy.get('.q-table__bottom').should('contain', 'No data available');}
+    } 
     cy.get('[data-cy="clear-btn"]').contains('Clear').click();
 }
 
@@ -139,12 +132,11 @@ context('Sales -> Claim Order List', () => {
         cy.fixture('sales/claim_order/m20-sales-claim_order.json').then((data) => {
             searchSuccess(data[0])
 
-            cy.get('#salesDateFrom').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('[data-cy="from-date-input"]').type('20210101');
+            
             searchClear();
 
-            cy.get('#salesDateTo').click()
-            cy.get('.ui-datepicker-days-cell-over > .ui-state-default').click();
+            cy.get('[data-cy="to-date-input"]').type('20210101');
             searchClear();
         })
     })
