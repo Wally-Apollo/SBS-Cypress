@@ -2,190 +2,190 @@
     {
         "eventType": [
             {
-                "f_type": "ApplicationShutdown"
+                "event-select": "ApplicationShutdown"
             },
             {
-                "f_type": "ApplicationStart"
+                "event-select": "ApplicationStart"
             },
             {
-                "f_type": "ApplicationUpdateEnd"
+                "event-select": "ApplicationUpdateEnd"
             },
             {
-                "f_type": "ApplicationUpdateStart"
+                "event-select": "ApplicationUpdateStart"
             },
             {
-                "f_type": "BackupEnd"
+                "event-select": "BackupEnd"
             },
             {
-                "f_type": "BackupStart"
+                "event-select": "BackupStart"
             },
             {
-                "f_type": "BeepPayment"
+                "event-select": "BeepPayment"
             },
             {
-                "f_type": "BeepPaymentFailed"
+                "event-select": "BeepPaymentFailed"
             },
             {
-                "f_type": "BeepTopUp"
+                "event-select": "BeepTopUp"
             },
             {
-                "f_type": "BeepTopUpFailed"
+                "event-select": "BeepTopUpFailed"
             },
             {
-                "f_type": "CancelCashDrop"
+                "event-select": "CancelCashDrop"
             },
             {
-                "f_type": "CancelDayEnd"
+                "event-select": "CancelDayEnd"
             },
             {
-                "f_type": "CancelShiftEnd"
+                "event-select": "CancelShiftEnd"
             },
             {
-                "f_type": "CancelTransaction"
+                "event-select": "CancelTransaction"
             },
             {
-                "f_type": "CashAdd"
+                "event-select": "CashAdd"
             },
             {
-                "f_type": "CashDrop"
+                "event-select": "CashDrop"
             },
             {
-                "f_type": "ClockIn"
+                "event-select": "ClockIn"
             },
             {
-                "f_type": "ClockOut"
+                "event-select": "ClockOut"
             },
             {
-                "f_type": "DayEnd"
+                "event-select": "DayEnd"
             },
             {
-                "f_type": "DayStart"
+                "event-select": "DayStart"
             },
             {
-                "f_type": "EcpayTimeOutConnection"
+                "event-select": "EcpayTimeOutConnection"
             },
             {
-                "f_type": "FailedEcpayTransaction"
+                "event-select": "FailedEcpayTransaction"
             },
             {
-                "f_type": "ItemCreate"
+                "event-select": "ItemCreate"
             },
             {
-                "f_type": "ItemRefund"
+                "event-select": "ItemRefund"
             },
             {
-                "f_type": "ItemVoid"
+                "event-select": "ItemVoid"
             },
             {
-                "f_type": "JournalPrint"
+                "event-select": "JournalPrint"
             },
             {
-                "f_type": "JournalSearch"
+                "event-select": "JournalSearch"
             },
             {
-                "f_type": "JournalView"
+                "event-select": "JournalView"
             },
             {
-                "f_type": "LastSyncTime"
+                "event-select": "LastSyncTime"
             },
             {
-                "f_type": "LogIn"
+                "event-select": "LogIn"
             },
             {
-                "f_type": "LogOut"
+                "event-select": "LogOut"
             },
             {
-                "f_type": "PosLock"
+                "event-select": "PosLock"
             },
             {
-                "f_type": "PosUnlock"
+                "event-select": "PosUnlock"
             },
             {
-                "f_type": "PriceLookup"
+                "event-select": "PriceLookup"
             },
             {
-                "f_type": "PriceReference"
+                "event-select": "PriceReference"
             },
             {
-                "f_type": "PrintBillsPayment"
+                "event-select": "PrintBillsPayment"
             },
             {
-                "f_type": "PrintMerchSales"
+                "event-select": "PrintMerchSales"
             },
             {
-                "f_type": "PrintServiceSales"
+                "event-select": "PrintServiceSales"
             },
             {
-                "f_type": "PrintShiftReading"
+                "event-select": "PrintShiftReading"
             },
             {
-                "f_type": "PrintTotalSales"
+                "event-select": "PrintTotalSales"
             },
             {
-                "f_type": "PrintXReading"
+                "event-select": "PrintXReading"
             },
             {
-                "f_type": "PrintZReport"
+                "event-select": "PrintZReport"
             },
             {
-                "f_type": "ReceiptRefund"
+                "event-select": "ReceiptRefund"
             },
             {
-                "f_type": "ReceiptReprint"
+                "event-select": "ReceiptReprint"
             },
             {
-                "f_type": "ReceiptStampFailed"
+                "event-select": "ReceiptStampFailed"
             },
             {
-                "f_type": "ReceiptStampSuccess"
+                "event-select": "ReceiptStampSuccess"
             },
             {
-                "f_type": "RemittancePayinTimeoutConnection"
+                "event-select": "RemittancePayinTimeoutConnection"
             },
             {
-                "f_type": "RemittancePayoutTimeoutConnection"
+                "event-select": "RemittancePayoutTimeoutConnection"
             },
             {
-                "f_type": "RestoreEnd"
+                "event-select": "RestoreEnd"
             },
             {
-                "f_type": "RestoreStart"
+                "event-select": "RestoreStart"
             },
             {
-                "f_type": "RewardFailed"
+                "event-select": "RewardFailed"
             },
             {
-                "f_type": "Sale"
+                "event-select": "Sale"
             },
             {
-                "f_type": "SevenConnectTimeoutConnection"
+                "event-select": "SevenConnectTimeoutConnection"
             },
             {
-                "f_type": "ShiftEnd"
+                "event-select": "ShiftEnd"
             },
             {
-                "f_type": "ShiftReading"
+                "event-select": "ShiftReading"
             },
             {
-                "f_type": "ShiftStart"
+                "event-select": "ShiftStart"
             },
             {
-                "f_type": "SyncFailed"
+                "event-select": "SyncFailed"
             },
             {
-                "f_type": "TrainingEnd"
+                "event-select": "TrainingEnd"
             },
             {
-                "f_type": "TrainingStart"
+                "event-select": "TrainingStart"
             },
             {
-                "f_type": "TubeDrop"
+                "event-select": "TubeDrop"
             },
             {
-                "f_type": "VatExemptPwd"
+                "event-select": "VatExemptPwd"
             },
             {
-                "f_type": "VatExemptPwdSales"
+                "event-select": "VatExemptPwdSales"
             }
         ]        
     }

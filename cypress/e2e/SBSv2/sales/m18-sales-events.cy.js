@@ -1,23 +1,36 @@
+    function navigateNavBar(navBarName, subNavBarName) {
+        cy.get('[data-cy="left-drawer"]').trigger("mouseover");
 
-    function navigateToModule(module) {
-        cy.get('[data-cy="left-drawer"]').trigger('mouseover').contains(module).click();
+        //dropdown
+        cy.get('[data-cy="nav-links"]')
+        .find("div")
+        .contains(navBarName)
+        .parent()
+        .click();
+
+        cy.get(
+        `[data-cy="link-${subNavBarName.replace(/ /g, "-").toLowerCase()}"]`
+        ).click();
     }
     
-    function navigateToSubModule(subModule) {
-        cy.get('[data-cy="nav-links"]').contains(subModule).click();
-    }
-    
+      
     function searchWithOneField(fieldId, value) {
         const field = `[data-cy=${fieldId}]`;
-        cy.get(field).type(value);
+        cy.get(field).click();
+        
+        cy.get('.q-menu .q-item').contains(value).click();
         cy.get('[data-cy="search-btn"]').click();
     }
     function searchWithCategory(fieldId,value){
         const field = `[data-cy=${fieldId}]`;
-        cy.get(field).type(value);
+        cy.get(field).click();
+        
+        cy.get('.q-menu .q-item').contains(value).click();
         cy.get('[data-cy="search-btn"]').click();
     }
     
+      
+      
     function searchSuccess(data,  category = false) {
         const keys = Object.keys(data); 
         let check;
@@ -36,30 +49,28 @@
                 }).then(()=>{
                     cy.wrap(check).then(value=>{
                         if(value>0){
-                            cy.get('table').should('have.descendants', 'td');
-                        }else{
-                            cy.get('.message').should('contain', 'Result not found.');
-                        }
+                            cy.get('[data-cy="events-table"]').should('have.descendants', 'td');
+                        }else{cy.get('.q-table__bottom').should('contain', 'No data available');}
                     })
                 })
     
-                cy.get('.btn').contains('Clear').click();
+                cy.get('[data-cy="clear-btn"').contains('Clear').click();
             }
         });
     }
     
     function searchClear() {
         let check;
-        cy.get('.btn').contains('Search').click();
+        cy.get('clear-btn').contains('Search').click();
         cy.get('table tbody').then($tbody=>{
             check = $tbody.find('tr').length;
             cy.log(`Rows inside tbody ${check}`)
         }).then(()=>{
             cy.wrap(check).then(value=>{
                 if(value>0){
-                    cy.get('table').should('have.descendants', 'td');
+                    cy.get('events-table').should('have.descendants', 'td');
                 }else{
-                    cy.get('.message').should('contain', 'Result not found.');
+                    cy.get('events-table').should('contain', 'No data available');
                 }
             })
         })
@@ -71,21 +82,23 @@
     }
     
     function validateEventModule(){
-        cy.get('h3').contains('Event List');
-        cy.get('label').contains('Facility');
-        cy.get('label').contains('Event Type');
-        cy.get('label').contains('Pos :');
-        cy.get('label').contains('Business Date From');
-        cy.get('label').contains('Business Date To');
-        cy.get('.btn').contains('Search');
-        cy.get('.btn').contains('Clear');
+        cy.get('[data-cy="title"]').contains('Event List');
+        cy.get('[data-cy="facility-input"]').should('exist').should('be.visible');
+        cy.get('[data-cy="event-select"]').should('exist').should('be.visible');
+        cy.get('[data-cy="pos-input"]').should('exist').should('be.visible');
+        cy.get('[data-cy="from-date-input"]').should('exist').should('be.visible');
+        cy.get('[data-cy="to-date-input"]').should('exist').should('be.visible');
+        cy.get('[data-cy="search-btn"]').contains('Search');
+        cy.get('[data-cy="clear-btn"]').contains('Clear');
+
+        cy.get('[data-cy="event-table"]').contains('Date Created');
+        cy.get('[data-cy="event-table"]').contains('Business Date');
+        cy.get('[data-cy="event-table"]').contains('Type'); 
+        cy.get('[data-cy="event-table"]').contains('POS');
+        cy.get('[data-cy="event-table"]').contains('Shift');
+        cy.get('[data-cy="event-table"]').contains('Receipt'); 
+        cy.get('[data-cy="event-table"]').contains('Description'); 
     
-        cy.get('.sortable').contains('Date Created');
-        cy.get('.sortable').contains('Business Date');
-        cy.get('.sortable').contains('Type');
-        cy.get('.sortable').contains('POS');
-        cy.get('.sortable').contains('Shift');
-        cy.get('.sortable').contains('Receipt');
     }
     
     function performSearch() {
@@ -98,29 +111,21 @@
         cy.visit(sbs_credentials.url)
         cy.contains('Username');
         cy.contains('Password');
-        cy.contains('Login');
+       
         cy.fixture('sbs_credentials/sbs_credentials').then((sbs_credentials) => {
-          cy.get('[id^=username]').type(sbs_credentials.username)
-          cy.get('[id^=password]').type(sbs_credentials.password)
-          cy.get('[id^=submit]').click()
+        cy.get('[data-cy="input-username"]').type(sbs_credentials.username);
+        cy.get('[data-cy="input-password"]').type(sbs_credentials.password);
+        cy.get('[data-cy="button-login"]').click();
     
-          cy.contains('Masterfile');
-          cy.contains('Matrix');
-          cy.contains('Inventory');
-          cy.contains('Sales');
-          cy.contains('Report');
-          cy.contains('Misc');
-          cy.contains('Sign out');
+       
+        
         })
       })
     })
     it('Validation of Event List page', () => {
         //Click Sales from the menu
-        navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
-    
+        navigateNavBar('Sales', 'Events');
+        
         //Validate that there will be no Error message displayed
         validateEventModule();
     })
@@ -128,11 +133,7 @@
     it('TC01: S01 - S05', ()=> {
     
     
-         //Click Sales from the menu
-         navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
+        navigateNavBar('Sales', 'Events');
     
         cy.fixture('sales/events/m18-sales-events').then((data) => {
             for (let i =  0; i <  data[0].eventType.length; i++) {
@@ -154,10 +155,7 @@
     
     it('TC02: S01 - S03', ()=> {
          //Click Sales from the menu
-         navigateToModule('Sales');
-    
-        //Click Transactions from menu list
-        navigateToSubModule('Events');
+         navigateNavBar('Sales', 'Events');
         
     
     

@@ -1,6 +1,6 @@
 [
     {
-        "documentId": "1",
-        "loyaltyCardNumber": "1"
+        "document-id-input": "1",
+        "erc-number-input": "1"
     }
 ]
