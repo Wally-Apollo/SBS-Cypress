@@ -10,7 +10,7 @@ function navigateToModule(module) {
   function searchWithOneField(fieldId, value) {
     const field = `[data-cy=${fieldId}]`;
     cy.get(field).type(value);
-    cy.get('[data-cy="search-button"]').click();
+    cy.get('[data-cy="search-btn"]').click();
   }
   
   function validateModule() {

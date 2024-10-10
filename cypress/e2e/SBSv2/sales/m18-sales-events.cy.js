@@ -1,24 +1,21 @@
 
-    //Common Functions
-    function navigateToModule(module){
-        cy.get('ul').contains(module).click();
+    function navigateToModule(module) {
+        cy.get('[data-cy="left-drawer"]').trigger('mouseover').contains(module).click();
     }
     
-    function navigateToSubModule(subModule){
-        cy.get('li').contains(subModule).click();
+    function navigateToSubModule(subModule) {
+        cy.get('[data-cy="nav-links"]').contains(subModule).click();
     }
     
-    
-    function searchWithOneField(fieldId,value){
-        const field = `[id^=${fieldId}]`;
+    function searchWithOneField(fieldId, value) {
+        const field = `[data-cy=${fieldId}]`;
         cy.get(field).type(value);
-        cy.get('.btn').contains('Search').click();
+        cy.get('[data-cy="search-btn"]').click();
     }
-    
     function searchWithCategory(fieldId,value){
-        const field = `[id^=${fieldId}]`;
-        cy.get(field).select(value);
-        cy.get('.btn').contains('Search').click();
+        const field = `[data-cy=${fieldId}]`;
+        cy.get(field).type(value);
+        cy.get('[data-cy="search-btn"]').click();
     }
     
     function searchSuccess(data,  category = false) {
