@@ -135,57 +135,6 @@
             },
             {
                 "event-select": "ReceiptStampFailed"
-            },
-            {
-                "event-select": "ReceiptStampSuccess"
-            },
-            {
-                "event-select": "RemittancePayinTimeoutConnection"
-            },
-            {
-                "event-select": "RemittancePayoutTimeoutConnection"
-            },
-            {
-                "event-select": "RestoreEnd"
-            },
-            {
-                "event-select": "RestoreStart"
-            },
-            {
-                "event-select": "RewardFailed"
-            },
-            {
-                "event-select": "Sale"
-            },
-            {
-                "event-select": "SevenConnectTimeoutConnection"
-            },
-            {
-                "event-select": "ShiftEnd"
-            },
-            {
-                "event-select": "ShiftReading"
-            },
-            {
-                "event-select": "ShiftStart"
-            },
-            {
-                "event-select": "SyncFailed"
-            },
-            {
-                "event-select": "TrainingEnd"
-            },
-            {
-                "event-select": "TrainingStart"
-            },
-            {
-                "event-select": "TubeDrop"
-            },
-            {
-                "event-select": "VatExemptPwd"
-            },
-            {
-                "event-select": "VatExemptPwdSales"
             }
         ]        
     }

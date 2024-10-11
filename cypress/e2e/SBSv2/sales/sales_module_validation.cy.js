@@ -37,9 +37,10 @@ function navigateNavBar(navBarName, subNavBarName) {
       cy.get('[data-cy="search-btn"]').contains('Search');
       cy.get('[data-cy="clear-btn"]').contains('Clear');
     
-      cy.get('[data-cy="sales-table"]').contains('Business Date');
-      cy.get('[data-cy="sales-table"]').contains('Prepared By');
-      cy.get('[data-cy="sales-table"]').contains('Status');
+      cy.get('[data-cy="module-validation-table"]').contains('Date Created');
+      cy.get('[data-cy="module-validation-table"]').contains('Business Date');
+      cy.get('[data-cy="module-validation-table"]').contains('Status'); 
+      cy.get('[data-cy="module-validation-table"]').contains('Total Cash');
     }
     
     context('Sales -> Module Validation', () => {
@@ -54,21 +55,14 @@ function navigateNavBar(navBarName, subNavBarName) {
     
       it('Validation of Module Validation List page', () => {
         // Click Sales from the menu
-        navigateToModule('Sales');
-    
-        // Click Module Validation from menu list
-        navigateToSubModule('Module Validation');
+        navigateNavBar('Sales', 'module-validation');
     
         // Validate that there will be no error message displayed
         validateModule();
       });
     
       it('Search Module Validation', () => {
-        // Click Sales from the menu
-        navigateToModule('Sales');
-    
-        // Click Module Validation from menu list
-        navigateToSubModule('Module Validation');
+        navigateNavBar('Sales', 'module-validation');
     
         // Validate that there will be no error message displayed
         validateModule();
@@ -130,7 +124,7 @@ function navigateNavBar(navBarName, subNavBarName) {
         validateModule();
     
         cy.get('[data-cy="create-module-btn"]').click();
-        cy.get('[data-cy="business-date"]').type(20240101);
+        cy.get('[data-cy="business-date-input"]').type(20240101);
         cy.get('[data-cy="save-btn"]').click();
       });
     });
